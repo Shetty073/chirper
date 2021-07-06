@@ -39,7 +39,11 @@ const chirpSchema = new Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Chirp'
         }
-    ]
+    ],
+    quoteChirp: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Chirp'
+    }
 }, { timestamps: true })
 
 module.exports = mongoose.model('Chirp', chirpSchema)

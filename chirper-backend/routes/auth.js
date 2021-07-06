@@ -1,18 +1,10 @@
 const router = require('express').Router()
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const {
-    uniqueNamesGenerator,
-    adjectives,
-} = require('unique-names-generator')
+const { uniqueNamesGenerator, adjectives } = require('unique-names-generator')
 const User = require('../models/user')
-const {
-    registerDataValidation,
-    loginDataValidation
-} = require('../validation')
-const {
-    verifyAuthToken
-} = require('../verifytoken')
+const { registerDataValidation, loginDataValidation } = require('../validation')
+const { verifyAuthToken } = require('../verifytoken')
 
 
 // authentication endpoints
@@ -87,9 +79,7 @@ router.post('/login', async (req, res) => {
         })
 
     // Check if the user already exists in the database
-    const user = await User.findOne({
-        email: req.body.email
-    }, '_id email password')
+    const user = await User.findOne({ email: req.body.email }, '_id email password')
     if (!user)
         return res.status(400).json({
             success: false,
@@ -107,38 +97,12 @@ router.post('/login', async (req, res) => {
         })
 
     // If the password matches create jsonwebtoken and send it back via header
-    const token = jwt.sign({
-        _id: user._id
-    }, process.env.TOKEN_SECRET)
-    const userWithoutPassword = await User.findOne({
-        email: req.body.email
-    })
+    const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET)
+    const userWithoutPassword = await User.findOne({ email: req.body.email })
     return res.header('Authorization', token).status(200).json({
         success: true,
         user: userWithoutPassword
     })
 })
-
-// This endpoint returns the User object for the requested username
-router.post('/', verifyAuthToken, (req, res) => {
-    User.findOne({
-            username: req.body.username,
-        },
-        function (err, user) {
-            if (err) {
-                return res.status(400).json({
-                    success: false,
-                    message: 'User not found!',
-                })
-            }
-
-            return res.status(200).json({
-                success: true,
-                user: user,
-            })
-        }
-    )
-})
-
 
 module.exports = router

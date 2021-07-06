@@ -8,6 +8,8 @@ const jwt = require('jsonwebtoken')
 
 // import routes
 const authRoutes = require("./routes/auth")
+const chirpRoutes = require("./routes/chirp")
+const userRoutes = require("./routes/user")
 
 
 dotenv.config()
@@ -22,7 +24,9 @@ app.use(express.json())
 app.use(cors())
 
 // route middlewares
-app.use("/api/user", authRoutes)
+app.use("/api/auth", authRoutes)
+app.use("/api/chirp", chirpRoutes)
+app.use("/api/user", userRoutes)
 
 // Handling request for invalid URI
 app.use(function (req, res, next) {
