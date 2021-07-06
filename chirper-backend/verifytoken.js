@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken")
 const verifyAuthToken = (req, res, next) => {
     const token = req.header("Authorization")
     if (!token)
-        res.status(400).json({
+        return res.status(400).json({
             success: false,
             message: "Access denied",
         })
@@ -13,7 +13,7 @@ const verifyAuthToken = (req, res, next) => {
         req.user = verified
         next()
     } catch (err) {
-        res.status(400).json({
+        return res.status(400).json({
             success: false,
             message: "Invalid token",
         })

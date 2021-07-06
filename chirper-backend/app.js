@@ -32,7 +32,7 @@ app.use(function (req, res, next) {
     } else {
         obj.message = "Invalid URI"
     }
-    res.status(404).json(obj)
+    return res.status(404).json(obj)
 })
 
 // Start the server
