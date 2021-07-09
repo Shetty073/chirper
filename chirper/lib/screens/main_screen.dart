@@ -39,7 +39,7 @@ class _MainScreenState extends State<MainScreen> {
         leading: IconButton(
           icon: IconTheme(
             data: IconThemeData(
-              color: Colors.blue,
+              color: Theme.of(context).appBarTheme.foregroundColor,
             ),
             child: Icon(
               Icons.menu,
@@ -52,11 +52,9 @@ class _MainScreenState extends State<MainScreen> {
         title: Text(
           widget.title!,
           style: TextStyle(
-            color: Colors.blue,
+            color: Theme.of(context).appBarTheme.foregroundColor,
           ),
         ),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.blue,
         elevation: 0.0,
       ),
       drawer: AppDrawer(),
@@ -82,8 +80,6 @@ class _MainScreenState extends State<MainScreen> {
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey,
         showSelectedLabels: false,
         showUnselectedLabels: false,
         iconSize: 30.0,
