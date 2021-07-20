@@ -11,6 +11,7 @@ class ChirpScreen extends StatefulWidget {
 
 class _ChirpScreenState extends State<ChirpScreen> {
   final _picker = ImagePicker();
+  TextEditingController chirpTextController = TextEditingController();
   PickedFile? pickedFile;
 
   void handleImagePick() async {
@@ -21,6 +22,12 @@ class _ChirpScreenState extends State<ChirpScreen> {
     // TODO; Complete this
     // TODO: Next - Complete posting chirp to backend
     print(pickedFile);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    chirpTextController.dispose();
   }
 
   @override
@@ -64,6 +71,7 @@ class _ChirpScreenState extends State<ChirpScreen> {
                     contentPadding:
                     EdgeInsets.only(bottom: 5, top: 5),
                   ),
+                  controller: chirpTextController,
                   scrollPadding: EdgeInsets.all(20.0),
                   keyboardType: TextInputType.multiline,
                   autofocus: true,
@@ -86,7 +94,7 @@ class _ChirpScreenState extends State<ChirpScreen> {
                       handleImagePick();
                     },
                   ),
-                  IconButton(
+                  IconButton( //Icons.insert_photo
                     icon: Icon(Icons.video_camera_back, color: Theme.of(context).appBarTheme.foregroundColor,),
                     onPressed: () {
                       // open video picker
