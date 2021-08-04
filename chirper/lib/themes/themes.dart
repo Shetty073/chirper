@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'texttheme.dart';
 
@@ -31,6 +32,27 @@ class CustomTheme with ChangeNotifier {
     });
   }
 
+  static InputDecorationTheme inputDecorationTheme = InputDecorationTheme(
+    border: OutlineInputBorder(),
+    labelStyle: GoogleFonts.roboto(
+      fontSize: 20.0,
+      color: Colors.blue,
+    ),
+    hintStyle: GoogleFonts.roboto(
+      color: Colors.grey,
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderSide: BorderSide(
+        color: Colors.blue,
+      ),
+    ),
+    errorBorder: OutlineInputBorder(
+      borderSide: BorderSide(
+        color: Colors.red,
+      ),
+    ),
+  );
+
   static ThemeData get lightTheme {
     return ThemeData.dark().copyWith(
       primaryColor: Colors.blue,
@@ -51,6 +73,7 @@ class CustomTheme with ChangeNotifier {
         unselectedItemColor: Colors.grey,
       ),
       textTheme: CustomTextTheme.light,
+      inputDecorationTheme: inputDecorationTheme,
     );
   }
 
@@ -74,6 +97,7 @@ class CustomTheme with ChangeNotifier {
         unselectedItemColor: Colors.grey,
       ),
       textTheme: CustomTextTheme.dark,
+      inputDecorationTheme: inputDecorationTheme,
     );
   }
 

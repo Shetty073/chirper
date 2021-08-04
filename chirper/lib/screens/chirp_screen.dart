@@ -15,9 +15,9 @@ class _ChirpScreenState extends State<ChirpScreen> {
   PickedFile? pickedFile;
 
   void handleImagePick() async {
-    pickedFile = await _picker.getImage(
+    pickedFile = (await _picker.pickImage(
       source: ImageSource.camera,
-    );
+    )) as PickedFile?;
 
     // TODO; Complete this
     // TODO: Next - Complete posting chirp to backend
