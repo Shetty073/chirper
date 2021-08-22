@@ -1,8 +1,8 @@
 import 'package:chirper/helpers/secure_storage_helper.dart';
-import 'package:chirper/services/auth.dart';
+import 'package:chirper/services/auth_service.dart';
 
 class AuthHelper {
-  final auth = Auth();
+  final auth = AuthService();
   final secureStorageHelper = SecureStorageHelper();
 
   Future register({required Map<String, String> data}) async {

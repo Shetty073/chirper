@@ -1,3 +1,5 @@
+import 'package:chirper/helpers/auth_helper.dart';
+import 'package:chirper/helpers/chirp_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,23 +13,47 @@ class ChirpScreen extends StatefulWidget {
 
 class _ChirpScreenState extends State<ChirpScreen> {
   final _picker = ImagePicker();
-  TextEditingController chirpTextController = TextEditingController();
-  PickedFile? pickedFile;
+  TextEditingController _chirpTextController = TextEditingController();
+  late ChirpHelper _chirpHelper;
+  XFile? _pickedFile;
+
+
+  void handleCameraImagePick() async {
+    _pickedFile = (await _picker.pickImage(
+      source: ImageSource.camera,
+    ));
+  }
 
   void handleImagePick() async {
-    pickedFile = (await _picker.pickImage(
-      source: ImageSource.camera,
-    )) as PickedFile?;
+    _pickedFile = (await _picker.pickImage(
+      source: ImageSource.gallery,
+    ));
+  }
 
-    // TODO; Complete this
-    // TODO: Next - Complete posting chirp to backend
-    print(pickedFile);
+  void handleSendChirp() {
+    if(_pickedFile != null) {
+      _chirpHelper.chirp(
+        chirp: _chirpTextController.text,
+        pickedFile: _pickedFile,
+      );
+    } else {
+      _chirpHelper.chirp(
+        chirp: _chirpTextController.text,
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    _chirpHelper = ChirpHelper();
+
+    super.initState();
   }
 
   @override
   void dispose() {
     super.dispose();
-    chirpTextController.dispose();
+    _chirpTextController.dispose();
   }
 
   @override
@@ -45,12 +71,35 @@ class _ChirpScreenState extends State<ChirpScreen> {
         foregroundColor: Theme.of(context).appBarTheme.foregroundColor,
         elevation: 0.0,
         actions: [
-          IconButton(
+          MaterialButton(
             onPressed: () {
               // send the chirp
+              handleSendChirp();
             },
-            icon: Icon(Icons.add_comment, color: Theme.of(context).appBarTheme.foregroundColor,)
+            child: Row(
+              children: [
+                Text(
+                  'Chirp ',
+                  style: TextStyle(
+                      color: Theme.of(context).appBarTheme.foregroundColor,
+                      fontSize: 18.0
+                  ),
+                ),
+                Icon(
+                  Icons.send,
+                  color: Theme.of(context).appBarTheme.foregroundColor,
+                  size: 20.0,
+                ),
+              ],
+            ),
           ),
+          // IconButton(
+          //   onPressed: () {
+          //     // send the chirp
+          //     handleSendChirp();
+          //   },
+          //   icon: Icon(Icons.add_comment, color: Theme.of(context).appBarTheme.foregroundColor,),
+          // ),
         ],
       ),
       body: Container(
@@ -71,7 +120,7 @@ class _ChirpScreenState extends State<ChirpScreen> {
                     contentPadding:
                     EdgeInsets.only(bottom: 5, top: 5),
                   ),
-                  controller: chirpTextController,
+                  controller: _chirpTextController,
                   scrollPadding: EdgeInsets.all(20.0),
                   keyboardType: TextInputType.multiline,
                   autofocus: true,
@@ -90,14 +139,15 @@ class _ChirpScreenState extends State<ChirpScreen> {
                   IconButton(
                     icon: Icon(Icons.add_a_photo, color: Theme.of(context).appBarTheme.foregroundColor,),
                     onPressed: () {
-                      // open image picker
-                      handleImagePick();
+                      // open camera image picker
+                      handleCameraImagePick();
                     },
                   ),
                   IconButton( //Icons.insert_photo
-                    icon: Icon(Icons.video_camera_back, color: Theme.of(context).appBarTheme.foregroundColor,),
+                    icon: Icon(Icons.image, color: Theme.of(context).appBarTheme.foregroundColor,),
                     onPressed: () {
-                      // open video picker
+                      // open gallery image picker
+                      handleImagePick();
                     },
                   )
                 ],

@@ -1,4 +1,6 @@
-import 'package:chirper/screens/LoadingScreen.dart';
+import 'package:chirper/data/models/chirp.dart';
+import 'package:chirper/data/models/user.dart';
+import 'package:chirper/screens/loading_screen.dart';
 import 'package:chirper/screens/chirp_screen.dart';
 import 'package:chirper/screens/login_screen.dart';
 import 'package:chirper/screens/register_screen.dart';
@@ -6,8 +8,15 @@ import 'package:chirper/themes/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:chirper/screens/main_screen.dart';
 import 'package:flutter/services.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
+void main() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter(ChirpAdapter());
+  await Hive.openLazyBox('chirps');
+  Hive.registerAdapter(UserAdapter());
+  await Hive.openBox('users');
+
   runApp(MyApp());
 }
 

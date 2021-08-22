@@ -19,8 +19,8 @@ mongoose.connect(process.env.DB_CONNECT, {useNewUrlParser: true, useUnifiedTopol
 console.log('Connected to database.'))
 
 // Middlewares
-app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 
 // route middlewares

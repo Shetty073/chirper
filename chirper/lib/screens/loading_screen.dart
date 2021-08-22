@@ -1,3 +1,4 @@
+import 'package:chirper/helpers/auth_helper.dart';
 import 'package:chirper/helpers/secure_storage_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart' show SpinKitFadingCube;
@@ -13,21 +14,21 @@ class LoadingScreen extends StatefulWidget {
 class _LoadingScreenState extends State<LoadingScreen> {
   final secureStorageHelper = SecureStorageHelper();
 
+  void checkLogin() async {
+    String? token = await secureStorageHelper.readVal(key: 'authToken');
+
+    if(token == null) {
+      Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+    } else {
+      Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+    }
+  }
+
   @override
   void initState() {
     checkLogin();
 
     super.initState();
-  }
-
-  void checkLogin() async {
-    String? token = await secureStorageHelper.readVal(key: 'authToken');
-    if(token == null) {
-      // Navigator.pushReplacementNamed(context, '/login');
-      Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
-    } else {
-      Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
-    }
   }
 
   @override

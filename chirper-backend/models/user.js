@@ -19,6 +19,9 @@ const userSchema = new Schema({
         maxLength: 50,
         message: 'Please provide a valid username'
     },
+    photo: {
+        type: String,
+    },
     email: {
         type: String,
         required: true,

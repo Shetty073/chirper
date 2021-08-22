@@ -4,13 +4,13 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:chirper/helpers/constants.dart';
 
-class Auth {
+class AuthService {
   // register user
   Future register({required Map<String, String> data}) async {
     var response;
     try {
       response = await http.post(
-        Uri.parse(Constants.REGISTER_URL),
+        Uri.parse(Constants.REGISTER_URI),
         body: {
           'name': data['name'],
           'email': data['email'],
@@ -72,7 +72,7 @@ class Auth {
     var response;
     try {
       response = await http.post(
-        Uri.parse(Constants.LOGIN_URL),
+        Uri.parse(Constants.LOGIN_URI),
         body: {
           'email': data['email'],
           'password': data['password'],
