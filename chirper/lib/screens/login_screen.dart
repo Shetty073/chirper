@@ -1,4 +1,7 @@
+import 'package:chirper/components/dialog_boxes/dialog_boxes.dart';
+import 'package:chirper/helpers/auth_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -8,9 +11,45 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  bool _isLoading = false;
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  late AuthHelper _authHelper;
+
+  void _handleLogin() {
+    setState(() {
+      _isLoading = true;
+    });
+
+    Map<String, String> data = {
+      'email': _emailController.text,
+      'password': _passwordController.text,
+    };
+
+    // perform login
+    _authHelper.login(data: data).then((value) {
+      if(value['userId'] != null) {
+        // Go to home
+        Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+      } else {
+        // stop loading indicator
+        setState(() {
+          _isLoading = false;
+
+          // display error message
+          DialogBoxes.infoBox(context, 'Error', value['message']);
+        });
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    _authHelper = AuthHelper();
+
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -78,15 +117,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       ElevatedButton(
-                        onPressed: () {
+                        onPressed: _isLoading ? (){} : () {
                           if (_formKey.currentState!.validate()) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                    'submitted'
-                                ),
-                              ),
-                            );
+                            _handleLogin();
                           }
                         },
                         style: ButtonStyle(
@@ -99,13 +132,16 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                         ),
-                        child: Text('Sign In'),
+                        child: _isLoading ? SpinKitCircle(
+                          color: Colors.white,
+                          size: 20.0,
+                        ) : Text('Sign In'),
                       ),
                       SizedBox(
                         height: 30.0,
                       ),
                       TextButton(
-                        onPressed: () {
+                        onPressed: _isLoading ? (){} : () {
                           Navigator.pushNamedAndRemoveUntil(context, '/register', (Route<dynamic> route) => false);
                         },
                         child: Text(

@@ -69,9 +69,7 @@ router.post('/register', async (req, res) => {
 
 router.post('/login', async (req, res) => {
     // Validate the data before we login a user
-    const {
-        error
-    } = loginDataValidation(req.body)
+    const { error } = loginDataValidation(req.body)
     if (error)
         return res.status(400).json({
             success: false,

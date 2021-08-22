@@ -1,4 +1,7 @@
+import 'package:chirper/components/dialog_boxes/dialog_boxes.dart';
+import 'package:chirper/helpers/auth_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -8,12 +11,14 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  bool _isLoading = false;
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _dobController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
+  late AuthHelper _authHelper;
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
@@ -27,6 +32,52 @@ class _RegisterScreenState extends State<RegisterScreen> {
         _dobController.text = '${pickedDate.year.toString()}-${pickedDate.month.toString().padLeft(2,'0')}-${pickedDate.day.toString().padLeft(2,'0')}';
       });
     }
+  }
+
+  void _handleRegister() {
+    setState(() {
+      _isLoading = true;
+    });
+
+    if(_passwordController.text == _confirmPasswordController.text) {
+      Map<String, String> data = {
+        'name': _nameController.text,
+        'email': _emailController.text,
+        'password': _passwordController.text,
+        'dob': _dobController.text,
+      };
+
+      // perform registration
+      _authHelper.register(data: data).then((value) {
+        if(value['userId'] != null) {
+          // Go to home
+          Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+        } else {
+          // stop loading indicator
+          setState(() {
+            _isLoading = false;
+
+            // display error message
+            DialogBoxes.infoBox(context, 'Error', value['message']);
+          });
+        }
+      });
+    } else {
+      setState(() {
+        _isLoading = false;
+
+        // display error message
+        DialogBoxes.infoBox(context, 'Error', 'Passwords do not match');
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    // initialize AuthHelper
+    _authHelper = AuthHelper();
+
+    super.initState();
   }
 
   @override
@@ -147,15 +198,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       ElevatedButton(
-                        onPressed: () {
+                        onPressed: _isLoading ? (){} : () {
                           if (_formKey.currentState!.validate()) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                    _dobController.text
-                                ),
-                              ),
-                            );
+                            _handleRegister();
                           }
                         },
                         style: ButtonStyle(
@@ -168,13 +213,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
                         ),
-                        child: Text('Sign Up'),
+                        child: _isLoading ? SpinKitCircle(
+                          color: Colors.white,
+                          size: 20.0,
+                        ) : Text('Sign Up'),
                       ),
                       SizedBox(
                         height: 30.0,
                       ),
                       TextButton(
-                        onPressed: () {
+                        onPressed: _isLoading ? (){} : () {
                           Navigator.pushNamedAndRemoveUntil(context, '/login', (Route<dynamic> route) => false);
                         },
                         child: Text(
