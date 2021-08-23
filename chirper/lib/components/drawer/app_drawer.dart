@@ -31,8 +31,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 child: ValueListenableBuilder<Box<User>>(
                   valueListenable: Boxes.getUsers().listenable(),
                   builder: (context, box, _) {
-                    final users = box.values.toList().cast<User>();
-                    var user = users[0];
+                    var user = box.get('user')!;
 
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,7 +39,7 @@ class _AppDrawerState extends State<AppDrawer> {
                         Container(
                           margin: EdgeInsets.only(bottom: 10.0),
                           child: CircleAvatar(
-                            radius: 24,
+                            radius: 30,
                             backgroundImage: NetworkImage(
                               user.photo != null ? user.photo! : 'https://ui-avatars.com/api/?name=N+A&background=0D8ABC&color=fff'
                             ),
@@ -81,6 +80,7 @@ class _AppDrawerState extends State<AppDrawer> {
                                     TextSpan(
                                         text: '${user.following}',
                                         style: TextStyle(
+                                          fontSize: 13.2,
                                           fontWeight: FontWeight.bold,
                                           color: Theme.of(context).textTheme.bodyText1?.color,
                                         )
@@ -102,6 +102,7 @@ class _AppDrawerState extends State<AppDrawer> {
                                     TextSpan(
                                         text: '${user.followers}',
                                         style: TextStyle(
+                                          fontSize: 13.2,
                                           fontWeight: FontWeight.bold,
                                           color: Theme.of(context).textTheme.bodyText1?.color,
                                         )
@@ -119,6 +120,11 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               ),
             ),
+            Divider(
+              thickness: 1.0,
+              color: Colors.grey,
+              height: 10,
+            ),
             Material(
               color: Theme.of(context).backgroundColor,
               child: InkWell(
@@ -130,7 +136,8 @@ class _AppDrawerState extends State<AppDrawer> {
                   title: Text('Profile'),
                 ),
                 onTap: () {
-                  // navigate to profile
+                  // close the drawer and navigate to profile page
+                  Navigator.of(context).popAndPushNamed('/profile');
                 },
               ),
             ),
@@ -145,7 +152,7 @@ class _AppDrawerState extends State<AppDrawer> {
                   title: Text('Settings'),
                 ),
                 onTap: () {
-                  // navigate to settings
+                  // TODO: navigate to settings
                 },
               ),
             ),

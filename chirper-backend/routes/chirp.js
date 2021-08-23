@@ -3,6 +3,7 @@ const User = require('../models/user')
 const Chirp = require('../models/chirp')
 const { verifyAuthToken } = require('../verifytoken')
 
+
 // multer for handling multipart form data
 const multer  = require('multer')
 const storage = multer.diskStorage({
@@ -17,12 +18,11 @@ const storage = multer.diskStorage({
     filename: function (req, file, cb) {
         let path = require('path')
         let fileName = Date.now() + path.extname(file.originalname)
-        req.body.fileName = `${req.protocol}://${req.get('host')}/${req.user._id}/${fileName}`
+        req.body.fileUrl = `${req.protocol}://${req.get('host')}/${req.user._id}/${fileName}`
         cb(null, fileName)
     }
 })
 const upload = multer({ storage: storage })
-
 
 // Chirp endpoints
 // create chirp (this endpoint handles multipart\form data due to file upload)
@@ -31,10 +31,10 @@ router.post('/create', [verifyAuthToken, upload.single('photo')], async (req, re
     try {
         const user = await User.findById(req.user._id)
         let chirp
-        if(req.body.fileName !== undefined || req.body.fileName !== '') {
+        if(req.body.fileUrl !== undefined || req.body.fileUrl !== '') {
             chirp = new Chirp({
                 text: req.body.chirp,
-                photos: [req.body.fileName],
+                photos: [req.body.fileUrl],
                 author: user,
             })
         } else {

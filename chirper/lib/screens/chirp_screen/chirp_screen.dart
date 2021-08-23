@@ -20,16 +20,16 @@ class _ChirpScreenState extends State<ChirpScreen> {
 
 
   void handleCameraImagePick() async {
-    _pickedFile = (await _picker.pickImage(
+    _pickedFile = await _picker.pickImage(
       source: ImageSource.camera,
-    ));
+    );
     setState(() {});
   }
 
   void handleImagePick() async {
-    _pickedFile = (await _picker.pickImage(
+    _pickedFile = await _picker.pickImage(
       source: ImageSource.gallery,
-    ));
+    );
     setState(() {});
   }
 
@@ -38,14 +38,14 @@ class _ChirpScreenState extends State<ChirpScreen> {
       _isLoading = true;
     });
 
-    bool chirpSuccessfull;
+    bool chirpSuccessful;
     if(_pickedFile != null) {
-      chirpSuccessfull = await _chirpHelper.chirp(
+      chirpSuccessful = await _chirpHelper.chirp(
         chirp: _chirpTextController.text,
         pickedFile: _pickedFile,
       );
     } else {
-      chirpSuccessfull = await _chirpHelper.chirp(
+      chirpSuccessful = await _chirpHelper.chirp(
         chirp: _chirpTextController.text,
       );
     }
@@ -54,7 +54,7 @@ class _ChirpScreenState extends State<ChirpScreen> {
       _isLoading = false;
     });
 
-    if(chirpSuccessfull) {
+    if(chirpSuccessful) {
       final chirpSuccessSnackBar = SnackBar(
         content: Text(
           'Chirp successful!',

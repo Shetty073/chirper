@@ -5,6 +5,7 @@ import 'package:chirper/screens/chirp_screen/chirp_screen.dart';
 import 'package:chirper/screens/auth_screens/login_screen.dart';
 import 'package:chirper/screens/profile_screen/profile_screen.dart';
 import 'package:chirper/screens/auth_screens/register_screen.dart';
+import 'package:chirper/screens/profile_screen/show_profile_image.dart';
 import 'package:chirper/themes/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:chirper/screens/main_screens/main_screen.dart';
@@ -60,6 +61,7 @@ class _MyAppState extends State<MyApp> {
         '/': (context) => SafeArea(child: MainScreen(title: 'Chirper')),
         '/chirp': (context) => SafeArea(child: ChirpScreen(),),
         '/profile': (context) => SafeArea(child: ProfileScreen(),),
+        '/show_profile_photo': (context) => SafeArea(child: ShowProfileImage(),),
       },
     );
   }
