@@ -5,7 +5,6 @@ const { verifyAuthToken } = require('../verifytoken')
 
 // multer for handling multipart form data
 const multer  = require('multer')
-let fullFileUrl = ''
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         let fs = require('fs')
@@ -13,13 +12,12 @@ const storage = multer.diskStorage({
         if(!fs.existsSync(destination)) {
             fs.mkdirSync(destination)
         }
-        fullFileUrl += destination
         cb(null, destination)
     },
     filename: function (req, file, cb) {
         let path = require('path')
         let fileName = Date.now() + path.extname(file.originalname)
-        req.body.fileName = `${req.protocol}://${req.get('host')}/${fullFileUrl}/${fileName}`
+        req.body.fileName = `${req.protocol}://${req.get('host')}/${req.user._id}/${fileName}`
         cb(null, fileName)
     }
 })

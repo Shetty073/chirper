@@ -1,21 +1,22 @@
 import 'package:chirper/data/models/chirp.dart';
 import 'package:chirper/data/models/user.dart';
-import 'package:chirper/screens/loading_screen.dart';
-import 'package:chirper/screens/chirp_screen.dart';
-import 'package:chirper/screens/login_screen.dart';
-import 'package:chirper/screens/register_screen.dart';
+import 'package:chirper/screens/loading_screen/loading_screen.dart';
+import 'package:chirper/screens/chirp_screen/chirp_screen.dart';
+import 'package:chirper/screens/auth_screens/login_screen.dart';
+import 'package:chirper/screens/profile_screen/profile_screen.dart';
+import 'package:chirper/screens/auth_screens/register_screen.dart';
 import 'package:chirper/themes/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:chirper/screens/main_screen.dart';
+import 'package:chirper/screens/main_screens/main_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(ChirpAdapter());
-  await Hive.openLazyBox('chirps');
+  await Hive.openLazyBox<Chirp>('chirps');
   Hive.registerAdapter(UserAdapter());
-  await Hive.openBox('users');
+  await Hive.openBox<User>('users');
 
   runApp(MyApp());
 }
@@ -58,6 +59,7 @@ class _MyAppState extends State<MyApp> {
         '/register': (context) => SafeArea(child: RegisterScreen()),
         '/': (context) => SafeArea(child: MainScreen(title: 'Chirper')),
         '/chirp': (context) => SafeArea(child: ChirpScreen(),),
+        '/profile': (context) => SafeArea(child: ProfileScreen(),),
       },
     );
   }

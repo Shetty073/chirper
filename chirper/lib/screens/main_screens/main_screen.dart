@@ -1,7 +1,7 @@
-import 'package:chirper/screens/home_screen.dart';
-import 'package:chirper/screens/messages_screen.dart';
-import 'package:chirper/screens/notifications_screen.dart';
-import 'package:chirper/screens/search_screen.dart';
+import 'package:chirper/screens/main_screens/home_screen.dart';
+import 'package:chirper/screens/main_screens/messages_screen.dart';
+import 'package:chirper/screens/main_screens/notifications_screen.dart';
+import 'package:chirper/screens/main_screens/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:chirper/components/drawer/app_drawer.dart';
 

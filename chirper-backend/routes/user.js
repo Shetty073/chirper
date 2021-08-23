@@ -24,4 +24,26 @@ router.post('/', verifyAuthToken, (req, res) => {
     )
 })
 
+// This endpoint returns the User object for the requested username
+router.post('/profilephoto/change', verifyAuthToken, (req, res) => {
+    // TODO: Complete this. Upload profile picture
+    User.findOne({
+            _id: req.user._id,
+        },
+        (err, user) => {
+            if (err) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'User not found!',
+                })
+            }
+
+            return res.status(200).json({
+                success: true,
+                user: user,
+            })
+        }
+    )
+})
+
 module.exports = router

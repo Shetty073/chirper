@@ -20,10 +20,10 @@ class UserAdapter extends TypeAdapter<User> {
       ..userId = fields[0] as String?
       ..name = fields[1] as String
       ..username = fields[2] as String
-      ..photo = fields[3] as String
-      ..email = fields[4] as String
-      ..dob = fields[5] as DateTime
-      ..location = fields[6] as String
+      ..photo = fields[3] as String?
+      ..email = fields[4] as String?
+      ..dob = fields[5] as DateTime?
+      ..location = fields[6] as String?
       ..isBot = fields[7] as bool
       ..followers = fields[8] as int?
       ..following = fields[9] as int?;

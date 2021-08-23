@@ -14,19 +14,19 @@ class User {
   late String username;
 
   @HiveField(3)
-  late String photo;
+  String? photo;
 
   @HiveField(4)
-  late String email;
+  String? email;
 
   @HiveField(5)
-  late DateTime dob;
+  DateTime? dob;
 
   @HiveField(6)
-  late String location;
+  String? location;
 
   @HiveField(7)
-  late bool isBot;
+  bool isBot = false;
 
   @HiveField(8)
   int? followers;

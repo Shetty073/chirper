@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:chirper/data/models/user.dart';
+import 'package:chirper/services/boxes.dart';
 import 'package:http/http.dart' as http;
 import 'package:chirper/helpers/constants.dart';
 
@@ -49,6 +51,18 @@ class AuthService {
           'userId': responseBody['user']['_id'],
           'authToken': response.headers['authorization']
         };
+
+        // save user's data
+        User user = User()
+        ..name = responseBody['user']['name']
+        ..username = responseBody['user']['username']
+        ..followers = responseBody['user']['followers'].length
+        ..following = responseBody['user']['following'].length;
+
+        final box = Boxes.getUsers();
+        box.put('user', user);
+
+        // return the response data
         return responseData;
 
       } else {
@@ -109,6 +123,18 @@ class AuthService {
           'userId': responseBody['user']['_id'],
           'authToken': response.headers['authorization']
         };
+
+        // save user's data
+        User user = User()
+          ..name = responseBody['user']['name']
+          ..username = responseBody['user']['username']
+          ..photo = responseBody['user']['photo']
+          ..followers = responseBody['user']['followers'].length
+          ..following = responseBody['user']['following'].length;
+
+        final box = Boxes.getUsers();
+        box.put('user', user);
+
         return responseData;
 
       } else {

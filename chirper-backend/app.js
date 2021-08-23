@@ -22,6 +22,7 @@ console.log('Connected to database.'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
+app.use(express.static('uploads'))
 
 // route middlewares
 app.use("/api/auth", authRoutes)
