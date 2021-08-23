@@ -3,6 +3,7 @@ const cors = require('cors')
 const app = express()
 const dotenv = require('dotenv')
 const mongoose = require('mongoose')
+const shared = require('./shared')
 const jwt = require('jsonwebtoken')
 
 
@@ -40,8 +41,62 @@ app.use(function (req, res, next) {
     return res.status(404).json(obj)
 })
 
+
+
+// socket.io configuration
+const http = require("http").createServer(app)
+const options = { /* ... */ }
+const io = require("socket.io")(http, options)
+shared.io = io
+
+let connections = 0
+// Socket.io code
+io.use((socket, next) => {
+    // if (socket.handshake.query && socket.handshake.query.token) {
+    //     jwt.verify(
+    //         socket.handshake.query.token,
+    //         process.env.TOKEN_SECRET,
+    //         function (err, decoded) {
+    //             if (err) return next(new Error("Authentication error"))
+    //             socket.decoded = decoded
+    //             next()
+    //         }
+    //     )
+    // } else {
+    //     next(new Error("Authentication error"))
+    // }
+    next()
+}).on("connection", (socket) => {
+    // Whenever a new socket connects increment the connections counter and console.log()
+    // the active user count.
+    connections++
+    console.log(`${socket.id} has joined`)
+    console.log(`Clients connected: ${connections}`)
+
+    socket.on('chirp', (user) => {
+        // user = user who chirped
+        // get user from db
+        // emit message to all the user_ids in this user's 'followers' list
+    })
+
+    // socket.on("join", (chat) => {
+    //     socket.join(chat.chatid)
+    // })
+
+    // socket.on("message", (message) => {
+    //     socket.broadcast.to(message.chatid).emit("message", message.body)
+    // })
+
+    // Whenever a socket disconnects decrement the connections counter and console.log()
+    // the active user count.
+    socket.on('disconnect', () => {
+        connections--
+        console.log(`Clients connected: ${connections}`)
+    })
+})
+
 // Start the server
 const PORT = process.env.PORT || 3000
-app.listen(PORT, () => {
+http.listen(PORT, () => {
     console.log(`Server started on http://192.168.1.100:${PORT}`)
 })

@@ -34,7 +34,7 @@ const profilePhotoStorage = multer.diskStorage({
             fs.mkdirSync(destination, {recursive: true})
         } else {
             // remove old profile_photo dir and then create the new one
-            fs.rmdirSync(destination, { recursive: true });
+            fs.rmdirSync(destination, { recursive: true })
             fs.mkdirSync(destination, {recursive: true})
         }
         cb(null, destination)

@@ -54,6 +54,7 @@ class AuthService {
 
         // save user's data
         User user = User()
+        ..userId = responseBody['user']['_id']
         ..name = responseBody['user']['name']
         ..username = responseBody['user']['username']
         ..followers = responseBody['user']['followers'].length
@@ -126,6 +127,7 @@ class AuthService {
 
         // save user's data
         User user = User()
+          ..userId = responseBody['user']['_id']
           ..name = responseBody['user']['name']
           ..username = responseBody['user']['username']
           ..photo = responseBody['user']['photo']
