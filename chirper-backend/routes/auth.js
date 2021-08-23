@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken')
 const { uniqueNamesGenerator, adjectives } = require('unique-names-generator')
 const User = require('../models/user')
 const { registerDataValidation, loginDataValidation } = require('../validation')
-const { verifyAuthToken } = require('../verifytoken')
 
 
 // authentication endpoints
@@ -59,7 +58,6 @@ router.post('/register', async (req, res) => {
         })
 
     } catch (err) {
-        console.log(err)
         return res.status(400).json({
             success: false,
             message: err.message,

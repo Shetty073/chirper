@@ -15,7 +15,11 @@ class ChirpHelper {
     } else {
       responseData = await chirpService.sendChirp(chirp: chirp);
     }
-    print(responseData);
-    return responseData;
+    if(responseData['nModified'] != null) {
+      print(responseData);
+      return true;
+    }
+
+    return false;
   }
 }

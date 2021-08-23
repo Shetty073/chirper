@@ -5,19 +5,22 @@ const { verifyAuthToken } = require('../verifytoken')
 
 // multer for handling multipart form data
 const multer  = require('multer')
+let fullFileUrl = ''
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         let fs = require('fs')
-        if(!fs.existsSync(`uploads/${req.user._id}`)) {
-            fs.mkdirSync(`uploads/${req.user._id}`)
+        let destination = `uploads/${req.user._id}`
+        if(!fs.existsSync(destination)) {
+            fs.mkdirSync(destination)
         }
-        cb(null, `uploads/${req.user._id}`)
+        fullFileUrl += destination
+        cb(null, destination)
     },
     filename: function (req, file, cb) {
         let path = require('path')
         let fileName = Date.now() + path.extname(file.originalname)
+        req.body.fileName = `${req.protocol}://${req.get('host')}/${fullFileUrl}/${fileName}`
         cb(null, fileName)
-        req.body.fileName = fileName
     }
 })
 const upload = multer({ storage: storage })
@@ -27,18 +30,56 @@ const upload = multer({ storage: storage })
 // create chirp (this endpoint handles multipart\form data due to file upload)
 router.post('/create', [verifyAuthToken, upload.single('photo')], async (req, res) => {
     console.log(req.body)
-    // const user = await User.findById(req.body.userId)
-    // const chirp = new Chirp({
-    //     text: req.body.text
-    // })
-    // const savedChirp = await chirp.save()
+    try {
+        const user = await User.findById(req.user._id)
+        let chirp
+        if(req.body.fileName !== undefined || req.body.fileName !== '') {
+            chirp = new Chirp({
+                text: req.body.chirp,
+                photos: [req.body.fileName],
+                author: user,
+            })
+        } else {
+            chirp = new Chirp({
+                text: req.body.chirp,
+                author: user,
+            })
+        }
 
-    // ! TODO: Complete this
+        const savedChirp = await chirp.save()
+    
+        const userUpdateStatus = await User.updateOne({_id: req.user._id}, {
+            $push: {
+                chirps: savedChirp,
+                feed: savedChirp,
+            },
+        })
 
-    return res.status(200).json({
-        success: true,
-        user: 'user',
-    })
+        // update the followers feed
+        await User.updateMany(
+            {
+                _id: {
+                        $in: user.followers,
+                    }
+            },
+            {
+                $push: {
+                    feed: savedChirp,
+                },
+            
+            }
+        )
+
+        return res.status(200).json({
+            success: true,
+            nModified: userUpdateStatus.nModified,
+        })
+    } catch (err) {
+        return res.status(400).json({
+            success: false,
+            message: err.message,
+        })
+    }
 })
 
 

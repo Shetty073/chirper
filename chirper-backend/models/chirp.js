@@ -16,6 +16,10 @@ const chirpSchema = new Schema({
     video: {
         type: String,
     },
+    author: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
     mentions: [
         {
             type: mongoose.Schema.Types.ObjectId,

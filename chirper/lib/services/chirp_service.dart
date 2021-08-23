@@ -9,7 +9,6 @@ import 'package:http/http.dart' as http;
 
 class ChirpService {
   Future sendChirp({required String chirp, MultipartFile? photo}) async {
-    print(chirp);
     final secureStorageHelper = SecureStorageHelper();
     String token = await secureStorageHelper.readVal(key: 'authToken');
 
@@ -35,17 +34,17 @@ class ChirpService {
     } on SocketException catch(_) {
       return {
         // Internet is off
-        'userId': null,
+        'nModified': null,
         'message': 'Internet connection not available. Please check your connection and retry.'
       };
     } on TimeoutException catch(_) {
       return {
-        'userId': null,
+        'nModified': null,
         'message': 'Error! Request timed out. Server not responding.'
       };
     } on HttpException catch(_) {
       return {
-        'userId': null,
+        'nModified': null,
         'message': 'Error! Bad Response. Server not responding.'
       };
     }
@@ -56,7 +55,7 @@ class ChirpService {
       // request was successful
       if(responseBody['success']) {
         Map responseData = {
-          'userId': responseBody['user'],
+          'nModified': responseBody['nModified'],
           'authToken': response.headers['authorization']
         };
         return responseData;
@@ -64,14 +63,14 @@ class ChirpService {
       } else {
         // request failed
         return {
-          'userId': null,
+          'nModified': null,
           'message': responseBody['message']
         };
       }
     } else {
       // request failed
       return {
-        'userId': null,
+        'nModified': null,
         'message': responseBody['message'] == null ? 'Server error! Please try again later' : responseBody['message'],
       };
     }

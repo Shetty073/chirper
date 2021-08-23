@@ -1,7 +1,7 @@
-import 'package:chirper/helpers/auth_helper.dart';
-import 'package:chirper/helpers/chirp_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'dart:io';
+import 'package:chirper/helpers/chirp_helper.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ChirpScreen extends StatefulWidget {
@@ -12,6 +12,7 @@ class ChirpScreen extends StatefulWidget {
 }
 
 class _ChirpScreenState extends State<ChirpScreen> {
+  bool _isLoading = false;
   final _picker = ImagePicker();
   TextEditingController _chirpTextController = TextEditingController();
   late ChirpHelper _chirpHelper;
@@ -22,24 +23,60 @@ class _ChirpScreenState extends State<ChirpScreen> {
     _pickedFile = (await _picker.pickImage(
       source: ImageSource.camera,
     ));
+    setState(() {});
   }
 
   void handleImagePick() async {
     _pickedFile = (await _picker.pickImage(
       source: ImageSource.gallery,
     ));
+    setState(() {});
   }
 
-  void handleSendChirp() {
+  void handleSendChirp() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    bool chirpSuccessfull;
     if(_pickedFile != null) {
-      _chirpHelper.chirp(
+      chirpSuccessfull = await _chirpHelper.chirp(
         chirp: _chirpTextController.text,
         pickedFile: _pickedFile,
       );
     } else {
-      _chirpHelper.chirp(
+      chirpSuccessfull = await _chirpHelper.chirp(
         chirp: _chirpTextController.text,
       );
+    }
+
+    setState(() {
+      _isLoading = false;
+    });
+
+    if(chirpSuccessfull) {
+      final chirpSuccessSnackBar = SnackBar(
+        content: Text(
+          'Chirp successful!',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Theme.of(context).appBarTheme.foregroundColor,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(chirpSuccessSnackBar);
+      Navigator.pop(context);
+    } else {
+      final chirpFailureSnackBar = SnackBar(
+        content: Text(
+          'Error in posting the chirp. Please try again later.',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Theme.of(context).appBarTheme.foregroundColor,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(chirpFailureSnackBar);
     }
   }
 
@@ -54,6 +91,21 @@ class _ChirpScreenState extends State<ChirpScreen> {
   void dispose() {
     super.dispose();
     _chirpTextController.dispose();
+  }
+
+  Widget selectedImages() {
+    return _pickedFile == null ? Container() : Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Image.file(
+            File(_pickedFile!.path),
+            height: 40,
+          )
+        ],
+      ),
+    );
   }
 
   @override
@@ -74,7 +126,9 @@ class _ChirpScreenState extends State<ChirpScreen> {
           MaterialButton(
             onPressed: () {
               // send the chirp
-              handleSendChirp();
+              if(!_isLoading) {
+                handleSendChirp();
+              }
             },
             child: Row(
               children: [
@@ -93,13 +147,6 @@ class _ChirpScreenState extends State<ChirpScreen> {
               ],
             ),
           ),
-          // IconButton(
-          //   onPressed: () {
-          //     // send the chirp
-          //     handleSendChirp();
-          //   },
-          //   icon: Icon(Icons.add_comment, color: Theme.of(context).appBarTheme.foregroundColor,),
-          // ),
         ],
       ),
       body: Container(
@@ -143,6 +190,7 @@ class _ChirpScreenState extends State<ChirpScreen> {
                       handleCameraImagePick();
                     },
                   ),
+                  selectedImages(),
                   IconButton( //Icons.insert_photo
                     icon: Icon(Icons.image, color: Theme.of(context).appBarTheme.foregroundColor,),
                     onPressed: () {

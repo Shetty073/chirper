@@ -58,6 +58,12 @@ const userSchema = new Schema({
             ref: 'Chirp'
         }
     ],
+    feed: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Chirp'
+        }
+    ],
     replies: [
         {
             type: mongoose.Schema.Types.ObjectId,
