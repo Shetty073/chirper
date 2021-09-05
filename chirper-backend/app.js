@@ -73,15 +73,12 @@ io.use((socket, next) => {
     console.log(`${socket.id} has joined`)
     console.log(`Clients connected: ${connections}`)
 
-    socket.on('chirp', (user) => {
-        // user = user who chirped
-        // get user from db
-        // emit message to all the user_ids in this user's 'followers' list
+    socket.on('join', (userId) => {
+        socket.join(userId)
+        shared.users[socket.id] = userId
+        socket.emit('joined', 'Successfully joined!')
+        console.log(shared.users)
     })
-
-    // socket.on("join", (chat) => {
-    //     socket.join(chat.chatid)
-    // })
 
     // socket.on("message", (message) => {
     //     socket.broadcast.to(message.chatid).emit("message", message.body)
@@ -90,6 +87,7 @@ io.use((socket, next) => {
     // Whenever a socket disconnects decrement the connections counter and console.log()
     // the active user count.
     socket.on('disconnect', () => {
+        delete shared.users[socket.id]
         connections--
         console.log(`Clients connected: ${connections}`)
     })

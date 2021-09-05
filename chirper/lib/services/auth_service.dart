@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:chirper/data/models/user.dart';
 import 'package:chirper/services/boxes.dart';
+import 'package:chirper/services/socket_io_service.dart';
 import 'package:http/http.dart' as http;
 import 'package:chirper/helpers/constants.dart';
 
@@ -62,6 +63,7 @@ class AuthService {
 
         final box = Boxes.getUsers();
         box.put('user', user);
+        SocketIoService.listen();
 
         // return the response data
         return responseData;
@@ -136,6 +138,7 @@ class AuthService {
 
         final box = Boxes.getUsers();
         box.put('user', user);
+        SocketIoService.listen();
 
         return responseData;
 

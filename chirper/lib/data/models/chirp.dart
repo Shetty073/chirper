@@ -14,20 +14,25 @@ class Chirp {
   late String username;
 
   @HiveField(3)
-  late String text;
+  late String profilePhoto;
 
   @HiveField(4)
-  List<String>? photos;
+  late String text;
 
   @HiveField(5)
-  String? video;
+  List<String>? photos;
 
   @HiveField(6)
-  int? noOfLikes;
+  String? video;
 
   @HiveField(7)
-  int? noOfReplies;
+  int? noOfLikes;
 
   @HiveField(8)
+  int? noOfReplies;
+
+  @HiveField(9)
   int? noOfReChirps;
+
+  // TODO: Add datetime field
 }

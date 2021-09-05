@@ -56,6 +56,7 @@ class ChirpService {
       if(responseBody['success']) {
         Map responseData = {
           'nModified': responseBody['nModified'],
+          'chirp': responseBody['chirp'],
           'authToken': response.headers['authorization']
         };
         return responseData;

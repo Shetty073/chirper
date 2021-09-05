@@ -20,18 +20,19 @@ class ChirpAdapter extends TypeAdapter<Chirp> {
       ..userId = fields[0] as String?
       ..name = fields[1] as String
       ..username = fields[2] as String
-      ..text = fields[3] as String
-      ..photos = (fields[4] as List?)?.cast<String>()
-      ..video = fields[5] as String?
-      ..noOfLikes = fields[6] as int?
-      ..noOfReplies = fields[7] as int?
-      ..noOfReChirps = fields[8] as int?;
+      ..profilePhoto = fields[3] as String
+      ..text = fields[4] as String
+      ..photos = (fields[5] as List?)?.cast<String>()
+      ..video = fields[6] as String?
+      ..noOfLikes = fields[7] as int?
+      ..noOfReplies = fields[8] as int?
+      ..noOfReChirps = fields[9] as int?;
   }
 
   @override
   void write(BinaryWriter writer, Chirp obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.userId)
       ..writeByte(1)
@@ -39,16 +40,18 @@ class ChirpAdapter extends TypeAdapter<Chirp> {
       ..writeByte(2)
       ..write(obj.username)
       ..writeByte(3)
-      ..write(obj.text)
+      ..write(obj.profilePhoto)
       ..writeByte(4)
-      ..write(obj.photos)
+      ..write(obj.text)
       ..writeByte(5)
-      ..write(obj.video)
+      ..write(obj.photos)
       ..writeByte(6)
-      ..write(obj.noOfLikes)
+      ..write(obj.video)
       ..writeByte(7)
-      ..write(obj.noOfReplies)
+      ..write(obj.noOfLikes)
       ..writeByte(8)
+      ..write(obj.noOfReplies)
+      ..writeByte(9)
       ..write(obj.noOfReChirps);
   }
 

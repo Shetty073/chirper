@@ -1,7 +1,6 @@
 
 import 'dart:io';
 
-import 'package:chirper/data/models/user.dart';
 import 'package:chirper/services/boxes.dart';
 import 'package:chirper/services/user_service.dart';
 import 'package:http/http.dart';

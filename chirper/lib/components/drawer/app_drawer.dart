@@ -31,7 +31,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 child: ValueListenableBuilder<Box<User>>(
                   valueListenable: Boxes.getUsers().listenable(),
                   builder: (context, box, _) {
-                    var user = box.get('user')!;
+                    final user = box.get('user')!;
 
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

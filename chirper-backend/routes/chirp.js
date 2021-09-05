@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const User = require('../models/user')
 const Chirp = require('../models/chirp')
+const shared = require('../shared')
 const { verifyAuthToken } = require('../verifytoken')
 
 
@@ -45,13 +46,18 @@ router.post('/create', [verifyAuthToken, upload.single('photo')], async (req, re
         }
 
         const savedChirp = await chirp.save()
-    
+
         const userUpdateStatus = await User.updateOne({_id: req.user._id}, {
             $push: {
                 chirps: savedChirp,
                 feed: savedChirp,
             },
         })
+
+        // send chirp to client via socket.io event
+        user.followers.forEach(user => {
+            shared.io.to(user._id).emit('chirp', savedChirp);
+        });
 
         // update the followers feed
         await User.updateMany(
@@ -71,6 +77,7 @@ router.post('/create', [verifyAuthToken, upload.single('photo')], async (req, re
         return res.status(200).json({
             success: true,
             nModified: userUpdateStatus.nModified,
+            chirp: savedChirp
         })
     } catch (err) {
         return res.status(400).json({

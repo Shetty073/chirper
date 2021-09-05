@@ -1,5 +1,6 @@
 import 'package:chirper/components/dialog_boxes/dialog_boxes.dart';
 import 'package:chirper/helpers/auth_helper.dart';
+import 'package:chirper/services/socket_io_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
