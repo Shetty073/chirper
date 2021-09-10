@@ -40,6 +40,8 @@ class _MyAppState extends State<MyApp> {
       systemNavigationBarColor: Theme.of(context).backgroundColor,
     ));
 
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+
     currentTheme.addListener(() {
       setState(() {});
     });

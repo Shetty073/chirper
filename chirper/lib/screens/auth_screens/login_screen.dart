@@ -1,5 +1,6 @@
 import 'package:chirper/components/dialog_boxes/dialog_boxes.dart';
 import 'package:chirper/helpers/auth_helper.dart';
+import 'package:chirper/helpers/chirp_helper.dart';
 import 'package:chirper/services/socket_io_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -17,6 +18,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   late AuthHelper _authHelper;
+  late ChirpHelper _chirpHelper;
 
   void _handleLogin() {
     setState(() {
@@ -32,6 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
     _authHelper.login(data: data).then((value) {
       if(value['userId'] != null) {
         // Go to home
+        _chirpHelper.homeFeed();
         Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
       } else {
         // stop loading indicator
@@ -48,6 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     _authHelper = AuthHelper();
+    _chirpHelper = ChirpHelper();
 
     super.initState();
   }

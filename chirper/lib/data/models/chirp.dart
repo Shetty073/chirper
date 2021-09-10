@@ -34,5 +34,8 @@ class Chirp {
   @HiveField(9)
   int? noOfReChirps;
 
+  @HiveField(10)
+  bool isRead = true;
+
   // TODO: Add datetime field
 }

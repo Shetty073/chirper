@@ -22,11 +22,11 @@ class _ChirpCardState extends State<ChirpCard> {
           ),
         ),
       ),
-      padding: EdgeInsets.only(left: 5.0, right: 5.0),
+      padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 6.0, bottom: 6.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -75,21 +75,24 @@ class _ChirpCardState extends State<ChirpCard> {
                     ),
                   ),
                   Container(
+                    width: 0.8 * MediaQuery.of(context).size.width,
                     padding: EdgeInsets.only(left: 5.0, top: 6.0),
                     child: Text(
-                        widget.chirp.text
+                      widget.chirp.text,
+                      overflow: TextOverflow.clip,
+                      softWrap: true,
                     ),
                   ),
                   widget.chirp.photos == null ? Container() :
                   Container(
                     child: Image.network(
                       widget.chirp.photos![0],
-                      width: MediaQuery.of(context).size.width,
-                      height: 300,
+                      width: 0.78 * MediaQuery.of(context).size.width,
                     ),
                   ),
                   Container(
                     width: 0.8 * MediaQuery.of(context).size.width,
+                    padding: EdgeInsets.only(top: 6.0, left: 2.0, right: 2.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

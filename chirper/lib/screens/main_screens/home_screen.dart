@@ -1,5 +1,6 @@
 import 'package:chirper/components/chirp_card/chirp_card.dart';
 import 'package:chirper/data/models/chirp.dart';
+import 'package:chirper/helpers/chirp_helper.dart';
 import 'package:chirper/services/boxes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -15,6 +16,21 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late ChirpHelper _chirpHelper;
+
+  // FPull fresh data
+  Future<void> _getNewData() async {
+    await _chirpHelper.homeFeed();
+  }
+
+  @override
+  void initState() {
+    _chirpHelper = ChirpHelper();
+    _getNewData();
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,9 +48,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   future: box.getAt(index),
                   builder: (context, snapshot) {
                     if(snapshot.connectionState == ConnectionState.done) {
-                      final Chirp _chirp = snapshot.data as Chirp;
-                      return ChirpCard(
-                        chirp: _chirp,
+                      if(!snapshot.hasError) {
+                        final Chirp _chirp = snapshot.data as Chirp;
+                        return ChirpCard(
+                          chirp: _chirp,
+                        );
+                      }
+                      return Container(
+                        child: Center(
+                          child: Text(snapshot.error.toString()),
+                        ),
                       );
                     } else {
                       return Container(

@@ -72,7 +72,7 @@ router.post('/create', [verifyAuthToken, upload.single('photo')], async (req, re
                 // },
                 $push: {
                     feed: {
-                        $each: savedChirp,
+                        $each: [savedChirp],
                         $sort: { updatedAt: -1 }
                     },
                 },
@@ -91,6 +91,5 @@ router.post('/create', [verifyAuthToken, upload.single('photo')], async (req, re
         })
     }
 })
-
 
 module.exports = router

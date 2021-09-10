@@ -3,7 +3,6 @@ const { Schema } = mongoose
 
 
 const chirpSchema = new Schema({
-    // TODO: Add a replyTo field to show which chirp is this chirp replying to (if any)
     text: {
         type: String,
         required: true,
@@ -45,6 +44,10 @@ const chirpSchema = new Schema({
             ref: 'Chirp'
         }
     ],
+    replyTo: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Chirp'
+    },
     quoteChirp: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Chirp'

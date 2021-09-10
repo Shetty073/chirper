@@ -64,6 +64,12 @@ const userSchema = new Schema({
             ref: 'Chirp'
         }
     ],
+    feedRead: [ // This is for storing chirps which are read by the user
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Chirp'
+        }
+    ],
     replies: [
         {
             type: mongoose.Schema.Types.ObjectId,

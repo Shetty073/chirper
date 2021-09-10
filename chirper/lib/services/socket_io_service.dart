@@ -37,27 +37,28 @@ class SocketIoService {
     }
 
     socket!.on('joined', (data) {
-      print(data);
+      print('socket connected and joined');
     });
 
     socket!.on('chirp', (chirp) {
-      Chirp myChirp = Chirp()
-      ..userId = chirp['author']['_id']
-      ..name = chirp['author']['name']
-      ..username = chirp['author']['username']
-      ..profilePhoto = chirp['author']['photo']
-      ..text = chirp['text']
-      ..noOfLikes = chirp['likedBy'].length
-      ..noOfReChirps = chirp['rechirpedBy'].length
-      ..noOfReplies = chirp['replies'].length;
-      if(chirp['photos'].length > 0) {
-        if(chirp['photos'][0] != null) {
-          myChirp.photos = List<String>.from(chirp['photos']);
-        }
-      }
-
       LazyBox box = Boxes.getChirps();
       if(!box.containsKey(chirp['_id'])) {
+        Chirp myChirp = Chirp()
+          ..userId = chirp['author']['_id']
+          ..name = chirp['author']['name']
+          ..username = chirp['author']['username']
+          ..profilePhoto = chirp['author']['photo']
+          ..text = chirp['text']
+          ..noOfLikes = chirp['likedBy'].length
+          ..noOfReChirps = chirp['rechirpedBy'].length
+          ..noOfReplies = chirp['replies'].length;
+
+        if(chirp['photos'].length > 0) {
+          if(chirp['photos'][0] != null) {
+            myChirp.photos = List<String>.from(chirp['photos']);
+          }
+        }
+
         box.put(chirp['_id'], myChirp);
       }
     });

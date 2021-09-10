@@ -56,7 +56,9 @@ class CustomTheme with ChangeNotifier {
   static ThemeData get lightTheme {
     return ThemeData.dark().copyWith(
       primaryColor: Colors.blue,
-      accentColor: Colors.blueAccent,
+      colorScheme: ColorScheme.fromSwatch().copyWith(
+          secondary: Colors.blueAccent
+      ),
       backgroundColor: Colors.white,
       scaffoldBackgroundColor: Colors.white,
       appBarTheme: AppBarTheme(
@@ -80,7 +82,9 @@ class CustomTheme with ChangeNotifier {
   static ThemeData get darkTheme {
     return ThemeData.dark().copyWith(
       primaryColor: Colors.black,
-      accentColor: Colors.blueAccent,
+      colorScheme: ColorScheme.fromSwatch().copyWith(
+          secondary: Colors.blueAccent
+      ),
       backgroundColor: Colors.black,
       scaffoldBackgroundColor: Colors.black,
       appBarTheme: AppBarTheme(

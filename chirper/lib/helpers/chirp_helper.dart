@@ -6,10 +6,9 @@ import 'package:chirper/services/boxes.dart';
 import 'package:hive/hive.dart';
 
 class ChirpHelper {
+  final chirpService = ChirpService();
 
   Future chirp({required String chirp, XFile? pickedFile}) async {
-    final chirpService = ChirpService();
-
     MultipartFile? photo;
     Map responseData;
     if(pickedFile != null) {
@@ -18,6 +17,7 @@ class ChirpHelper {
     } else {
       responseData = await chirpService.sendChirp(chirp: chirp);
     }
+
     if(responseData['nModified'] != null) {
       if(responseData['chirp'] != null) {
         Map chirp = responseData['chirp'];
@@ -45,6 +45,40 @@ class ChirpHelper {
       return true;
     }
 
+    return false;
+  }
+
+  Future homeFeed() async {
+    Map responseData = await chirpService.getHomeFeed();
+
+    if(responseData['chirps'] != null) {
+      var chirps = responseData['chirps'];
+
+      for(var chirp in chirps) {
+        LazyBox box = Boxes.getChirps();
+        if(!box.containsKey(chirp['_id'])) {
+          Chirp myChirp = Chirp()
+            ..userId = chirp['author']['_id']
+            ..name = chirp['author']['name']
+            ..username = chirp['author']['username']
+            ..profilePhoto = chirp['author']['photo']
+            ..text = chirp['text']
+            ..noOfLikes = chirp['likedBy'].length
+            ..noOfReChirps = chirp['rechirpedBy'].length
+            ..noOfReplies = chirp['replies'].length;
+
+          if(chirp['photos'].length > 0) {
+            if(chirp['photos'][0] != null) {
+              myChirp.photos = List<String>.from(chirp['photos']);
+            }
+          }
+
+          box.put(chirp['_id'], myChirp);
+        }
+      }
+
+      return true;
+    }
 
     return false;
   }

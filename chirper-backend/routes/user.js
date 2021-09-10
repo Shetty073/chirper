@@ -72,4 +72,27 @@ router.post('/profilephoto/change', [verifyAuthToken, profilePhotoUpload.single(
     }
 })
 
+// This endpoint is for getting the user's home feed
+router.get('/feed', verifyAuthToken, async (req, res) => {
+    try {
+        const user = await User.findOne({_id: req.user._id}).populate({
+            path: 'feed',
+            populate: {
+                path: 'author'
+            }
+        }).exec()
+
+        return res.status(200).json({
+            success: true,
+            chirps: user.feed.reverse(),
+        })
+    } catch (err) {
+        return res.status(400).json({
+            success: false,
+            message: err.message,
+        })
+    }
+
+})
+
 module.exports = router

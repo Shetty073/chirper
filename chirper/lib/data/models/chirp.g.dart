@@ -26,13 +26,14 @@ class ChirpAdapter extends TypeAdapter<Chirp> {
       ..video = fields[6] as String?
       ..noOfLikes = fields[7] as int?
       ..noOfReplies = fields[8] as int?
-      ..noOfReChirps = fields[9] as int?;
+      ..noOfReChirps = fields[9] as int?
+      ..isRead = fields[10] as bool;
   }
 
   @override
   void write(BinaryWriter writer, Chirp obj) {
     writer
-      ..writeByte(10)
+      ..writeByte(11)
       ..writeByte(0)
       ..write(obj.userId)
       ..writeByte(1)
@@ -52,7 +53,9 @@ class ChirpAdapter extends TypeAdapter<Chirp> {
       ..writeByte(8)
       ..write(obj.noOfReplies)
       ..writeByte(9)
-      ..write(obj.noOfReChirps);
+      ..write(obj.noOfReChirps)
+      ..writeByte(10)
+      ..write(obj.isRead);
   }
 
   @override
