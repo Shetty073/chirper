@@ -67,10 +67,15 @@ router.post('/create', [verifyAuthToken, upload.single('photo')], async (req, re
                     }
             },
             {
+                // $push: {
+                //     feed: savedChirp,
+                // },
                 $push: {
-                    feed: savedChirp,
+                    feed: {
+                        $each: savedChirp,
+                        $sort: { updatedAt: -1 }
+                    },
                 },
-            
             }
         )
 
