@@ -27,18 +27,19 @@ class _ProfilePageHeaderState extends State<ProfilePageHeader> {
                 GestureDetector(
                   child: CircleAvatar(
                     radius: 50,
-                    backgroundImage: NetworkImage(
-                        user.photo != null ? user.photo! : 'https://ui-avatars.com/api/?name=N+A&background=2196F3&color=fff'
-                    ),
-                    backgroundColor: Theme.of(context).appBarTheme.foregroundColor,
+                    backgroundImage: NetworkImage(user.photo ??
+                        'https://ui-avatars.com/api/?name=N+A&background=2196F3&color=fff'),
+                    backgroundColor:
+                        Theme.of(context).appBarTheme.foregroundColor,
                   ),
                   onTap: () {
                     Navigator.of(context).pushNamed('/show_profile_photo');
                   },
                 ),
-
                 Container(
-                  padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1, left: 15.0),
+                  padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height * 0.1,
+                      left: 15.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -56,7 +57,9 @@ class _ProfilePageHeaderState extends State<ProfilePageHeader> {
                         '@${user.username}',
                         style: TextStyle(
                           fontSize: 13.0,
-                          color: Theme.of(context).bottomNavigationBarTheme.unselectedItemColor,
+                          color: Theme.of(context)
+                              .bottomNavigationBarTheme
+                              .unselectedItemColor,
                         ),
                       ),
                       SizedBox(
@@ -69,7 +72,9 @@ class _ProfilePageHeaderState extends State<ProfilePageHeader> {
                               text: TextSpan(
                                 style: TextStyle(
                                   fontSize: 15.0,
-                                  color: Theme.of(context).bottomNavigationBarTheme.unselectedItemColor,
+                                  color: Theme.of(context)
+                                      .bottomNavigationBarTheme
+                                      .unselectedItemColor,
                                 ),
                                 children: [
                                   TextSpan(
@@ -77,9 +82,11 @@ class _ProfilePageHeaderState extends State<ProfilePageHeader> {
                                       style: TextStyle(
                                         fontSize: 15.0,
                                         fontWeight: FontWeight.bold,
-                                        color: Theme.of(context).textTheme.bodyText1?.color,
-                                      )
-                                  ),
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .bodyText1
+                                            ?.color,
+                                      )),
                                   TextSpan(text: ' Following'),
                                 ],
                               ),
@@ -91,7 +98,9 @@ class _ProfilePageHeaderState extends State<ProfilePageHeader> {
                               text: TextSpan(
                                 style: TextStyle(
                                   fontSize: 15.0,
-                                  color: Theme.of(context).bottomNavigationBarTheme.unselectedItemColor,
+                                  color: Theme.of(context)
+                                      .bottomNavigationBarTheme
+                                      .unselectedItemColor,
                                 ),
                                 children: [
                                   TextSpan(
@@ -99,10 +108,15 @@ class _ProfilePageHeaderState extends State<ProfilePageHeader> {
                                       style: TextStyle(
                                         fontSize: 15.0,
                                         fontWeight: FontWeight.bold,
-                                        color: Theme.of(context).textTheme.bodyText1?.color,
-                                      )
-                                  ),
-                                  TextSpan(text: user.followers !> 1 ? ' Followers' : ' Follower'),
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .bodyText1
+                                            ?.color,
+                                      )),
+                                  TextSpan(
+                                      text: user.followers! > 1
+                                          ? ' Followers'
+                                          : ' Follower'),
                                 ],
                               ),
                             ),
@@ -115,8 +129,6 @@ class _ProfilePageHeaderState extends State<ProfilePageHeader> {
               ],
             ),
           );
-        }
-    );
+        });
   }
 }
-

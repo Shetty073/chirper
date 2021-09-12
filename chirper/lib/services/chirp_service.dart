@@ -1,10 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:chirper/data/models/chirp.dart';
+
 import 'package:chirper/helpers/constants.dart';
 import 'package:chirper/helpers/secure_storage_helper.dart';
-import 'package:chirper/services/boxes.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 
@@ -14,9 +13,10 @@ class ChirpService {
   Future sendChirp({required String chirp, MultipartFile? photo}) async {
     String token = await secureStorageHelper.readVal(key: 'authToken');
 
-    var request = http.MultipartRequest('POST', Uri.parse(Constants.CREATE_CHIRP_URI));
+    var request =
+        http.MultipartRequest('POST', Uri.parse(Constants.CREATE_CHIRP_URI));
     request.fields.addAll({'chirp': chirp});
-    if(photo != null) {
+    if (photo != null) {
       request.files.add(photo);
     }
 
@@ -26,25 +26,23 @@ class ChirpService {
 
     var streamedResponse;
     try {
-      streamedResponse = await request.send()
-      .timeout(
-        Duration(seconds: 120),
-        onTimeout: () {
-          throw TimeoutException('Request timed out. Server not responding.');
-        }
-      );
-    } on SocketException catch(_) {
+      streamedResponse =
+          await request.send().timeout(Duration(seconds: 120), onTimeout: () {
+        throw TimeoutException('Request timed out. Server not responding.');
+      });
+    } on SocketException catch (_) {
       return {
         // Internet is off
         'nModified': null,
-        'message': 'Internet connection not available. Please check your connection and retry.'
+        'message':
+            'Internet connection not available. Please check your connection and retry.'
       };
-    } on TimeoutException catch(_) {
+    } on TimeoutException catch (_) {
       return {
         'nModified': null,
         'message': 'Error! Request timed out. Server not responding.'
       };
-    } on HttpException catch(_) {
+    } on HttpException catch (_) {
       return {
         'nModified': null,
         'message': 'Error! Bad Response. Server not responding.'
@@ -53,28 +51,25 @@ class ChirpService {
 
     var response = await Response.fromStream(streamedResponse);
     final Map responseBody = json.decode(response.body);
-    if(response.statusCode == 200) {
+    if (response.statusCode == 200) {
       // request was successful
-      if(responseBody['success']) {
+      if (responseBody['success']) {
         Map responseData = {
           'nModified': responseBody['nModified'],
           'chirp': responseBody['chirp'],
           'authToken': response.headers['authorization']
         };
         return responseData;
-
       } else {
         // request failed
-        return {
-          'nModified': null,
-          'message': responseBody['message']
-        };
+        return {'nModified': null, 'message': responseBody['message']};
       }
     } else {
       // request failed
       return {
         'nModified': null,
-        'message': responseBody['message'] == null ? 'Server error! Please try again later' : responseBody['message'],
+        'message':
+            responseBody['message'] ?? 'Server error! Please try again later',
       };
     }
   }
@@ -85,28 +80,24 @@ class ChirpService {
     var response;
     try {
       response = await http.get(
-          Uri.parse(Constants.FEED_URI),
-          headers: {
-            HttpHeaders.authorizationHeader: token
-          },
-      ).timeout(
-          Duration(seconds: 10),
-          onTimeout: () {
-            throw TimeoutException('Request timed out. Server not responding.');
-          }
-      );
-    } on SocketException catch(_) {
+        Uri.parse(Constants.FEED_URI),
+        headers: {HttpHeaders.authorizationHeader: token},
+      ).timeout(Duration(seconds: 10), onTimeout: () {
+        throw TimeoutException('Request timed out. Server not responding.');
+      });
+    } on SocketException catch (_) {
       return {
         // Internet is off
         'userId': null,
-        'message': 'Internet connection not available. Please check your connection and retry.'
+        'message':
+            'Internet connection not available. Please check your connection and retry.'
       };
-    } on TimeoutException catch(_) {
+    } on TimeoutException catch (_) {
       return {
         'userId': null,
         'message': 'Error! Request timed out. Server not responding.'
       };
-    } on HttpException catch(_) {
+    } on HttpException catch (_) {
       return {
         'userId': null,
         'message': 'Error! Bad Response. Server not responding.'
@@ -114,29 +105,25 @@ class ChirpService {
     }
 
     final Map responseBody = json.decode(response.body);
-    if(response.statusCode == 200) {
+    if (response.statusCode == 200) {
       // request was successful
-      if(responseBody['success']) {
+      if (responseBody['success']) {
         Map responseData = {
           'chirps': responseBody['chirps'],
           'authToken': response.headers['authorization'],
         };
         return responseData;
-
       } else {
         // request failed
-        return {
-          'chirps': null,
-          'message': responseBody['message']
-        };
+        return {'chirps': null, 'message': responseBody['message']};
       }
     } else {
       // request failed
       return {
         'chirps': null,
-        'message': responseBody['message'] == null ? 'Server error! Please try again later' : responseBody['message'],
+        'message':
+            responseBody['message'] ?? 'Server error! Please try again later',
       };
     }
   }
-
 }

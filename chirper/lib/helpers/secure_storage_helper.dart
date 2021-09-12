@@ -12,9 +12,8 @@ class SecureStorageHelper {
 
   Future writeVal({required Map data}) async {
     // write key : value data
-    for(final key in data.keys) {
+    for (final key in data.keys) {
       await storage.write(key: key, value: data[key]);
     }
   }
-
 }

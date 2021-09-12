@@ -1,7 +1,6 @@
 import 'package:chirper/components/dialog_boxes/dialog_boxes.dart';
 import 'package:chirper/helpers/auth_helper.dart';
 import 'package:chirper/helpers/chirp_helper.dart';
-import 'package:chirper/services/socket_io_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -32,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     // perform login
     _authHelper.login(data: data).then((value) {
-      if(value['userId'] != null) {
+      if (value['userId'] != null) {
         // Go to home
         _chirpHelper.homeFeed();
         Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
@@ -69,7 +68,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.only(top: 10.0, right: 10.0, bottom: 10.0, left: 10.0),
+        padding:
+            EdgeInsets.only(top: 10.0, right: 10.0, bottom: 10.0, left: 10.0),
         child: SingleChildScrollView(
           padding: EdgeInsets.only(top: 0.08 * screenHeight),
           child: Form(
@@ -122,11 +122,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       ElevatedButton(
-                        onPressed: _isLoading ? (){} : () {
-                          if (_formKey.currentState!.validate()) {
-                            _handleLogin();
-                          }
-                        },
+                        onPressed: _isLoading
+                            ? () {}
+                            : () {
+                                if (_formKey.currentState!.validate()) {
+                                  _handleLogin();
+                                }
+                              },
                         style: ButtonStyle(
                           minimumSize: MaterialStateProperty.all(
                             Size(0.15 * screenHeight, 0.06 * screenHeight),
@@ -137,18 +139,25 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                         ),
-                        child: _isLoading ? SpinKitCircle(
-                          color: Colors.white,
-                          size: 20.0,
-                        ) : Text('Sign In'),
+                        child: _isLoading
+                            ? SpinKitCircle(
+                                color: Colors.white,
+                                size: 20.0,
+                              )
+                            : Text('Sign In'),
                       ),
                       SizedBox(
                         height: 30.0,
                       ),
                       TextButton(
-                        onPressed: _isLoading ? (){} : () {
-                          Navigator.pushNamedAndRemoveUntil(context, '/register', (Route<dynamic> route) => false);
-                        },
+                        onPressed: _isLoading
+                            ? () {}
+                            : () {
+                                Navigator.pushNamedAndRemoveUntil(
+                                    context,
+                                    '/register',
+                                    (Route<dynamic> route) => false);
+                              },
                         child: Text(
                           'Don\'t have an account?',
                           style: TextStyle(
@@ -167,4 +176,3 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
-

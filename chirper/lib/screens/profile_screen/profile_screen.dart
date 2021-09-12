@@ -9,7 +9,8 @@ class ProfileScreen extends StatefulWidget {
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderStateMixin {
+class _ProfileScreenState extends State<ProfileScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   bool _isLoading = false;
 
@@ -34,7 +35,10 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
         slivers: [
           SliverAppBar(
             leading: IconButton(
-              icon: Icon(Icons.arrow_back, color: Theme.of(context).appBarTheme.foregroundColor,),
+              icon: Icon(
+                Icons.arrow_back,
+                color: Theme.of(context).appBarTheme.foregroundColor,
+              ),
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -42,9 +46,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
             pinned: true,
             expandedHeight: MediaQuery.of(context).size.height * 0.3,
             flexibleSpace: FlexibleSpaceBar(
-              stretchModes: [
-                StretchMode.blurBackground
-              ],
+              stretchModes: [StretchMode.blurBackground],
               titlePadding: EdgeInsets.all(0.0),
               background: ProfilePageHeader(),
             ),
@@ -53,7 +55,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                 padding: EdgeInsets.fromLTRB(0.0, 12.0, 10.0, 12.0),
                 child: Material(
                   shape: RoundedRectangleBorder(
-                    borderRadius:BorderRadius.circular(30.0),
+                    borderRadius: BorderRadius.circular(30.0),
                     side: BorderSide(
                       color: Theme.of(context).appBarTheme.foregroundColor!,
                     ),
@@ -62,7 +64,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                   color: Theme.of(context).backgroundColor,
                   child: MaterialButton(
                     onPressed: () {
-                      if(!_isLoading) {
+                      if (!_isLoading) {
                         // TODO: Goto edit profile page
                       }
                     },
@@ -97,7 +99,6 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
               ],
             ),
           ),
-
           SliverFillRemaining(
             child: Container(
               margin: EdgeInsets.only(left: 10.0, right: 10.0),
@@ -134,10 +135,8 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
               ),
             ),
           ),
-
         ],
       ),
     );
   }
 }
-

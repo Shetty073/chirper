@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:chirper/services/boxes.dart';
@@ -11,11 +10,11 @@ class UserHelper {
 
     MultipartFile photo;
     Map responseData;
-    if(pickedFile != null) {
+    if (pickedFile != null) {
       photo = await MultipartFile.fromPath('photo', pickedFile.path);
       responseData = await userService.updatePhoto(photo: photo);
 
-      if(responseData['nModified'] != null) {
+      if (responseData['nModified'] != null) {
         String newProfilePhotoUrl = responseData['profilePhoto'];
 
         final box = Boxes.getUsers();

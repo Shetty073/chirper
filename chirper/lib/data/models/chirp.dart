@@ -8,34 +8,38 @@ class Chirp {
   String? userId;
 
   @HiveField(1)
-  late String name;
+  String? chirpId;
 
   @HiveField(2)
-  late String username;
+  late String name;
 
   @HiveField(3)
-  late String profilePhoto;
+  late String username;
 
   @HiveField(4)
-  late String text;
+  late String? profilePhoto;
 
   @HiveField(5)
-  List<String>? photos;
+  late String text;
 
   @HiveField(6)
-  String? video;
+  List<String>? photos;
 
   @HiveField(7)
-  int? noOfLikes;
+  String? video;
 
   @HiveField(8)
-  int? noOfReplies;
+  int? noOfLikes;
 
   @HiveField(9)
-  int? noOfReChirps;
+  int? noOfReplies;
 
   @HiveField(10)
+  int? noOfReChirps;
+
+  @HiveField(11)
   bool isRead = true;
 
-  // TODO: Add datetime field
+  @HiveField(12)
+  late DateTime dateTime;
 }

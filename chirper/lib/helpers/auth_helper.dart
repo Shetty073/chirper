@@ -16,7 +16,6 @@ class AuthHelper {
     return responseData;
   }
 
-
   Future login({required Map<String, String> data}) async {
     Map responseData = await auth.login(data: data);
 
@@ -27,5 +26,4 @@ class AuthHelper {
 
     return responseData;
   }
-
 }

@@ -13,7 +13,6 @@ class AppDrawer extends StatefulWidget {
 }
 
 class _AppDrawerState extends State<AppDrawer> {
-
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -40,9 +39,8 @@ class _AppDrawerState extends State<AppDrawer> {
                           margin: EdgeInsets.only(bottom: 10.0),
                           child: CircleAvatar(
                             radius: 30,
-                            backgroundImage: NetworkImage(
-                              user.photo != null ? user.photo! : 'https://ui-avatars.com/api/?name=N+A&background=0D8ABC&color=fff'
-                            ),
+                            backgroundImage: NetworkImage(user.photo ??
+                                'https://ui-avatars.com/api/?name=N+A&background=0D8ABC&color=fff'),
                             backgroundColor: Theme.of(context).primaryColor,
                           ),
                         ),
@@ -61,7 +59,9 @@ class _AppDrawerState extends State<AppDrawer> {
                           child: Text(
                             '@${user.username}',
                             style: TextStyle(
-                              color: Theme.of(context).bottomNavigationBarTheme.unselectedItemColor,
+                              color: Theme.of(context)
+                                  .bottomNavigationBarTheme
+                                  .unselectedItemColor,
                               fontSize: 15,
                             ),
                           ),
@@ -74,7 +74,9 @@ class _AppDrawerState extends State<AppDrawer> {
                                 text: TextSpan(
                                   style: TextStyle(
                                     fontSize: 13.0,
-                                    color: Theme.of(context).bottomNavigationBarTheme.unselectedItemColor,
+                                    color: Theme.of(context)
+                                        .bottomNavigationBarTheme
+                                        .unselectedItemColor,
                                   ),
                                   children: [
                                     TextSpan(
@@ -82,9 +84,11 @@ class _AppDrawerState extends State<AppDrawer> {
                                         style: TextStyle(
                                           fontSize: 13.2,
                                           fontWeight: FontWeight.bold,
-                                          color: Theme.of(context).textTheme.bodyText1?.color,
-                                        )
-                                    ),
+                                          color: Theme.of(context)
+                                              .textTheme
+                                              .bodyText1
+                                              ?.color,
+                                        )),
                                     TextSpan(text: ' Following'),
                                   ],
                                 ),
@@ -96,7 +100,9 @@ class _AppDrawerState extends State<AppDrawer> {
                                 text: TextSpan(
                                   style: TextStyle(
                                     fontSize: 13.0,
-                                    color: Theme.of(context).bottomNavigationBarTheme.unselectedItemColor,
+                                    color: Theme.of(context)
+                                        .bottomNavigationBarTheme
+                                        .unselectedItemColor,
                                   ),
                                   children: [
                                     TextSpan(
@@ -104,10 +110,15 @@ class _AppDrawerState extends State<AppDrawer> {
                                         style: TextStyle(
                                           fontSize: 13.2,
                                           fontWeight: FontWeight.bold,
-                                          color: Theme.of(context).textTheme.bodyText1?.color,
-                                        )
-                                    ),
-                                    TextSpan(text: user.followers !> 1 ? ' Followers' : ' Follower'),
+                                          color: Theme.of(context)
+                                              .textTheme
+                                              .bodyText1
+                                              ?.color,
+                                        )),
+                                    TextSpan(
+                                        text: user.followers! > 1
+                                            ? ' Followers'
+                                            : ' Follower'),
                                   ],
                                 ),
                               ),
@@ -165,9 +176,10 @@ class _AppDrawerState extends State<AppDrawer> {
                     padding: EdgeInsets.only(left: 5.0, bottom: 5.0),
                     child: Material(
                       color: Theme.of(context).backgroundColor,
-                      child: IconButton(onPressed: () {
-                        currentTheme.toggleTheme();
-                      },
+                      child: IconButton(
+                        onPressed: () {
+                          currentTheme.toggleTheme();
+                        },
                         icon: Icon(
                           Icons.brightness_4_rounded,
                           color: Theme.of(context).textTheme.bodyText1?.color,

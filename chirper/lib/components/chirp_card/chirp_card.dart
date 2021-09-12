@@ -1,5 +1,7 @@
 import 'package:chirper/data/models/chirp.dart';
+import 'package:chirper/helpers/date_time_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ChirpCard extends StatefulWidget {
   final Chirp chirp;
@@ -35,9 +37,8 @@ class _ChirpCardState extends State<ChirpCard> {
                     margin: EdgeInsets.only(bottom: 10.0),
                     child: CircleAvatar(
                       radius: 25,
-                      backgroundImage: NetworkImage(
-                          widget.chirp.profilePhoto
-                      ),
+                      backgroundImage: NetworkImage(widget.chirp.profilePhoto ??
+                          'https://ui-avatars.com/api/?name=N+A&background=0D8ABC&color=fff'),
                       backgroundColor: Theme.of(context).primaryColor,
                     ),
                   ),
@@ -48,6 +49,7 @@ class _ChirpCardState extends State<ChirpCard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
+                    width: 0.8 * MediaQuery.of(context).size.width,
                     padding: EdgeInsets.only(top: 0, left: 5.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -61,16 +63,33 @@ class _ChirpCardState extends State<ChirpCard> {
                           ),
                         ),
                         SizedBox(
-                          width: 5.0,
+                          width: 2.0,
                         ),
                         Text(
                           '@${widget.chirp.username}',
                           style: TextStyle(
-                            color: Theme.of(context).bottomNavigationBarTheme.unselectedItemColor,
+                            color: Theme.of(context)
+                                .bottomNavigationBarTheme
+                                .unselectedItemColor,
                             fontSize: 14,
                           ),
                         ),
-                        // TODO: Text('datetime'),
+                        SizedBox(
+                          width: 5.0,
+                        ),
+                        Expanded(
+                          child: Text(
+                            '${DateTimeHelper.getFormattedDate(widget.chirp.dateTime)}',
+                            style: TextStyle(
+                              color: Theme.of(context)
+                                  .bottomNavigationBarTheme
+                                  .unselectedItemColor,
+                              fontSize: 14,
+                            ),
+                            softWrap: true,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -83,13 +102,14 @@ class _ChirpCardState extends State<ChirpCard> {
                       softWrap: true,
                     ),
                   ),
-                  widget.chirp.photos == null ? Container() :
-                  Container(
-                    child: Image.network(
-                      widget.chirp.photos![0],
-                      width: 0.78 * MediaQuery.of(context).size.width,
-                    ),
-                  ),
+                  widget.chirp.photos == null
+                      ? Container()
+                      : Container(
+                          child: Image.network(
+                            widget.chirp.photos![0],
+                            width: 0.78 * MediaQuery.of(context).size.width,
+                          ),
+                        ),
                   Container(
                     width: 0.8 * MediaQuery.of(context).size.width,
                     padding: EdgeInsets.only(top: 6.0, left: 2.0, right: 2.0),
@@ -117,7 +137,8 @@ class _ChirpCardState extends State<ChirpCard> {
                                 )
                               ],
                             ),
-                            padding: EdgeInsets.only(left: 5.0, top: 8.0, bottom: 5.0),
+                            padding: EdgeInsets.only(
+                                left: 5.0, top: 8.0, bottom: 5.0),
                           ),
                           onTap: () {
                             // TODO: type and send reply to this chirp
@@ -144,7 +165,8 @@ class _ChirpCardState extends State<ChirpCard> {
                                 )
                               ],
                             ),
-                            padding: EdgeInsets.only(left: 5.0, top: 8.0, bottom: 5.0),
+                            padding: EdgeInsets.only(
+                                left: 5.0, top: 8.0, bottom: 5.0),
                           ),
                           onTap: () {
                             // TODO: type and send reply to this chirp
@@ -171,7 +193,8 @@ class _ChirpCardState extends State<ChirpCard> {
                                 )
                               ],
                             ),
-                            padding: EdgeInsets.only(left: 5.0, top: 8.0, bottom: 5.0),
+                            padding: EdgeInsets.only(
+                                left: 5.0, top: 8.0, bottom: 5.0),
                           ),
                           onTap: () {
                             // TODO: type and send reply to this chirp

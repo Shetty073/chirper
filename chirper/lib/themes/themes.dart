@@ -12,9 +12,8 @@ class CustomTheme with ChangeNotifier {
   static bool isDarkTheme = brightness == Brightness.dark;
 
   CustomTheme() {
-    SharedPreferences.getInstance()
-        .then((SharedPreferences prefs) {
-      if(prefs.getBool('isDarkTheme') != null) {
+    SharedPreferences.getInstance().then((SharedPreferences prefs) {
+      if (prefs.getBool('isDarkTheme') != null) {
         isDarkTheme = prefs.getBool('isDarkTheme')!;
         notifyListeners();
       }
@@ -56,11 +55,11 @@ class CustomTheme with ChangeNotifier {
   static ThemeData get lightTheme {
     return ThemeData.dark().copyWith(
       primaryColor: Colors.blue,
-      colorScheme: ColorScheme.fromSwatch().copyWith(
-          secondary: Colors.blueAccent
-      ),
+      colorScheme: ColorScheme.fromSwatch()
+          .copyWith(primary: Colors.blue, secondary: Colors.blueAccent),
       backgroundColor: Colors.white,
       scaffoldBackgroundColor: Colors.white,
+      dialogBackgroundColor: Colors.white,
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.white,
         foregroundColor: Colors.blue,
@@ -82,15 +81,13 @@ class CustomTheme with ChangeNotifier {
   static ThemeData get darkTheme {
     return ThemeData.dark().copyWith(
       primaryColor: Colors.black,
-      colorScheme: ColorScheme.fromSwatch().copyWith(
-          secondary: Colors.blueAccent
-      ),
+      colorScheme:
+          ColorScheme.fromSwatch().copyWith(secondary: Colors.blueAccent),
       backgroundColor: Colors.black,
       scaffoldBackgroundColor: Colors.black,
+      dialogBackgroundColor: Colors.black,
       appBarTheme: AppBarTheme(
-          backgroundColor: Colors.black,
-          foregroundColor: Colors.blue
-      ),
+          backgroundColor: Colors.black, foregroundColor: Colors.blue),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
@@ -104,6 +101,4 @@ class CustomTheme with ChangeNotifier {
       inputDecorationTheme: inputDecorationTheme,
     );
   }
-
-
 }

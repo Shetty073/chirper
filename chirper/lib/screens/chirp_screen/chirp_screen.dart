@@ -1,7 +1,8 @@
+import 'dart:io';
+
+import 'package:chirper/helpers/chirp_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'dart:io';
-import 'package:chirper/helpers/chirp_helper.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ChirpScreen extends StatefulWidget {
@@ -17,7 +18,6 @@ class _ChirpScreenState extends State<ChirpScreen> {
   TextEditingController _chirpTextController = TextEditingController();
   late ChirpHelper _chirpHelper;
   XFile? _pickedFile;
-
 
   void handleCameraImagePick() async {
     _pickedFile = await _picker.pickImage(
@@ -39,7 +39,7 @@ class _ChirpScreenState extends State<ChirpScreen> {
     });
 
     bool chirpSuccessful;
-    if(_pickedFile != null) {
+    if (_pickedFile != null) {
       chirpSuccessful = await _chirpHelper.chirp(
         chirp: _chirpTextController.text,
         pickedFile: _pickedFile,
@@ -54,7 +54,7 @@ class _ChirpScreenState extends State<ChirpScreen> {
       _isLoading = false;
     });
 
-    if(chirpSuccessful) {
+    if (chirpSuccessful) {
       final chirpSuccessSnackBar = SnackBar(
         content: Text(
           'Chirp successful!',
@@ -94,18 +94,20 @@ class _ChirpScreenState extends State<ChirpScreen> {
   }
 
   Widget selectedImages() {
-    return _pickedFile == null ? Container() : Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Image.file(
-            File(_pickedFile!.path),
-            height: 40,
-          )
-        ],
-      ),
-    );
+    return _pickedFile == null
+        ? Container()
+        : Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Image.file(
+                  File(_pickedFile!.path),
+                  height: 40,
+                )
+              ],
+            ),
+          );
   }
 
   @override
@@ -114,7 +116,10 @@ class _ChirpScreenState extends State<ChirpScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.close, color: Theme.of(context).appBarTheme.foregroundColor,),
+          icon: Icon(
+            Icons.close,
+            color: Theme.of(context).appBarTheme.foregroundColor,
+          ),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -126,7 +131,7 @@ class _ChirpScreenState extends State<ChirpScreen> {
           MaterialButton(
             onPressed: () {
               // send the chirp
-              if(!_isLoading) {
+              if (!_isLoading) {
                 handleSendChirp();
               }
             },
@@ -136,8 +141,7 @@ class _ChirpScreenState extends State<ChirpScreen> {
                   'Chirp ',
                   style: TextStyle(
                       color: Theme.of(context).appBarTheme.foregroundColor,
-                      fontSize: 18.0
-                  ),
+                      fontSize: 18.0),
                 ),
                 Icon(
                   Icons.send,
@@ -164,8 +168,7 @@ class _ChirpScreenState extends State<ChirpScreen> {
                     enabledBorder: InputBorder.none,
                     errorBorder: InputBorder.none,
                     disabledBorder: InputBorder.none,
-                    contentPadding:
-                    EdgeInsets.only(bottom: 5, top: 5),
+                    contentPadding: EdgeInsets.only(bottom: 5, top: 5),
                   ),
                   controller: _chirpTextController,
                   scrollPadding: EdgeInsets.all(20.0),
@@ -184,15 +187,22 @@ class _ChirpScreenState extends State<ChirpScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
-                    icon: Icon(Icons.add_a_photo, color: Theme.of(context).appBarTheme.foregroundColor,),
+                    icon: Icon(
+                      Icons.add_a_photo,
+                      color: Theme.of(context).appBarTheme.foregroundColor,
+                    ),
                     onPressed: () {
                       // open camera image picker
                       handleCameraImagePick();
                     },
                   ),
                   selectedImages(),
-                  IconButton( //Icons.insert_photo
-                    icon: Icon(Icons.image, color: Theme.of(context).appBarTheme.foregroundColor,),
+                  IconButton(
+                    //Icons.insert_photo
+                    icon: Icon(
+                      Icons.image,
+                      color: Theme.of(context).appBarTheme.foregroundColor,
+                    ),
                     onPressed: () {
                       // open gallery image picker
                       handleImagePick();
@@ -209,6 +219,4 @@ class _ChirpScreenState extends State<ChirpScreen> {
       ),
     );
   }
-
 }
-

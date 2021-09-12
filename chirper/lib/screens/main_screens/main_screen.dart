@@ -1,10 +1,10 @@
+import 'package:chirper/components/drawer/app_drawer.dart';
 import 'package:chirper/screens/main_screens/home_screen.dart';
 import 'package:chirper/screens/main_screens/messages_screen.dart';
 import 'package:chirper/screens/main_screens/notifications_screen.dart';
 import 'package:chirper/screens/main_screens/search_screen.dart';
 import 'package:chirper/services/socket_io_service.dart';
 import 'package:flutter/material.dart';
-import 'package:chirper/components/drawer/app_drawer.dart';
 
 class MainScreen extends StatefulWidget {
   final String? title;
@@ -70,20 +70,20 @@ class _MainScreenState extends State<MainScreen> {
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         items: [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home'
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search'
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications, size: 27.0,),
+            icon: Icon(
+              Icons.notifications,
+              size: 27.0,
+            ),
             label: 'Notifications',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.message, size: 26.0,),
+            icon: Icon(
+              Icons.message,
+              size: 26.0,
+            ),
             label: 'Messages',
           ),
         ],

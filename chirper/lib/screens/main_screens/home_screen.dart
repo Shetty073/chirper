@@ -5,8 +5,8 @@ import 'package:chirper/services/boxes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -47,8 +47,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 return FutureBuilder(
                   future: box.getAt(index),
                   builder: (context, snapshot) {
-                    if(snapshot.connectionState == ConnectionState.done) {
-                      if(!snapshot.hasError) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      if (!snapshot.hasError) {
                         final Chirp _chirp = snapshot.data as Chirp;
                         return ChirpCard(
                           chirp: _chirp,
@@ -64,7 +64,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Center(
                           child: SpinKitCircle(
                             size: 10.0,
-                            color: Theme.of(context).bottomNavigationBarTheme.unselectedItemColor,
+                            color: Theme.of(context)
+                                .bottomNavigationBarTheme
+                                .unselectedItemColor,
                           ),
                         ),
                       );
@@ -79,4 +81,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-

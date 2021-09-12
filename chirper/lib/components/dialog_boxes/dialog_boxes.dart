@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class DialogBoxes {
-  static Future<void> infoBox(BuildContext context, String title, String content) async {
+  static Future<void> infoBox(
+      BuildContext context, String title, String content) async {
     double screenWidth = MediaQuery.of(context).size.width;
     String titleWithEmoji = title + ' 😢';
     return showDialog<void>(
@@ -42,8 +43,8 @@ class DialogBoxes {
     );
   }
 
-
-  static Future confirmBox(BuildContext context, String title, String content) async {
+  static Future confirmBox(
+      BuildContext context, String title, String content) async {
     // NOTE: This is a general confirmation dialog box
     // Usage:-
     // * DialogBoxes.confirmBox(context, 'No results found', data['message']).then((value) {

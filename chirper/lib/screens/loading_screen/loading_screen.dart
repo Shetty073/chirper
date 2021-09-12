@@ -1,4 +1,3 @@
-import 'package:chirper/helpers/auth_helper.dart';
 import 'package:chirper/helpers/chirp_helper.dart';
 import 'package:chirper/helpers/secure_storage_helper.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +18,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   void checkLogin() async {
     String? token = await secureStorageHelper.readVal(key: 'authToken');
 
-    if(token == null) {
+    if (token == null) {
       Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
     } else {
       _chirpHelper.homeFeed();
@@ -61,6 +60,4 @@ class _LoadingScreenState extends State<LoadingScreen> {
       ),
     );
   }
-
 }
-

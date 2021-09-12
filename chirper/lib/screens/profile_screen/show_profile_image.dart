@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:chirper/data/models/user.dart';
 import 'package:chirper/helpers/user_helper.dart';
 import 'package:chirper/services/boxes.dart';
@@ -31,31 +32,31 @@ class _ShowProfileImageState extends State<ShowProfileImage> {
       source: ImageSource.gallery,
     );
 
-    if(_pickedFile != null) {
+    if (_pickedFile != null) {
       _croppedFile = await ImageCropper.cropImage(
           sourcePath: _pickedFile!.path,
           aspectRatioPresets: [
             CropAspectRatioPreset.square,
           ],
           androidUiSettings: AndroidUiSettings(
-              toolbarTitle: 'Crop image',
-              toolbarColor: Colors.blue,
-              toolbarWidgetColor: Colors.white,
-              initAspectRatio: CropAspectRatioPreset.square,
-              lockAspectRatio: true,
+            toolbarTitle: 'Crop image',
+            toolbarColor: Colors.blue,
+            toolbarWidgetColor: Colors.white,
+            initAspectRatio: CropAspectRatioPreset.square,
+            lockAspectRatio: true,
           ),
           iosUiSettings: IOSUiSettings(
             minimumAspectRatio: 1.0,
-          )
-      );
+          ));
 
-      bool updateSuccessful = await _userHelper.updateProfilePhoto(pickedFile: _croppedFile);
+      bool updateSuccessful =
+          await _userHelper.updateProfilePhoto(pickedFile: _croppedFile);
 
       setState(() {
         _isLoading = false;
       });
 
-      if(updateSuccessful) {
+      if (updateSuccessful) {
         final chirpSuccessSnackBar = SnackBar(
           content: Text(
             'Update successful!',
@@ -79,7 +80,6 @@ class _ShowProfileImageState extends State<ShowProfileImage> {
         );
         ScaffoldMessenger.of(context).showSnackBar(chirpFailureSnackBar);
       }
-
     }
   }
 
@@ -110,31 +110,37 @@ class _ShowProfileImageState extends State<ShowProfileImage> {
                 var user = users[0];
 
                 return Image.network(
-                  user.photo != null ? user.photo! : 'https://ui-avatars.com/api/?name=N+A&background=2196F3&color=fff',
+                  user.photo != null
+                      ? user.photo!
+                      : 'https://ui-avatars.com/api/?name=N+A&background=2196F3&color=fff',
                   width: MediaQuery.of(context).size.width,
                   height: 500,
                 );
               },
             ),
-            _isLoading ? SpinKitCircle(
-              color: Theme.of(context).appBarTheme.foregroundColor,
-              size: 15.0,
-            ) : OutlinedButton(
-              style: OutlinedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
-                ),
-                side: BorderSide(width: 2, color: Theme.of(context).appBarTheme.foregroundColor!),
-              ),
-              onPressed: () {
-                changeImage();
-              },
-              child: Text('Change'),
-            ),
+            _isLoading
+                ? SpinKitCircle(
+                    color: Theme.of(context).appBarTheme.foregroundColor,
+                    size: 15.0,
+                  )
+                : OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                      side: BorderSide(
+                          width: 2,
+                          color:
+                              Theme.of(context).appBarTheme.foregroundColor!),
+                    ),
+                    onPressed: () {
+                      changeImage();
+                    },
+                    child: Text('Change'),
+                  ),
           ],
         ),
       ),
     );
   }
 }
-
