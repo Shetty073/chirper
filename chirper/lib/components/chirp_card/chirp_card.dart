@@ -169,7 +169,7 @@ class _ChirpCardState extends State<ChirpCard> {
                                 left: 5.0, top: 8.0, bottom: 5.0),
                           ),
                           onTap: () {
-                            // TODO: type and send reply to this chirp
+                            // TODO: re-chirp this
                           },
                         ),
                         GestureDetector(
@@ -197,7 +197,7 @@ class _ChirpCardState extends State<ChirpCard> {
                                 left: 5.0, top: 8.0, bottom: 5.0),
                           ),
                           onTap: () {
-                            // TODO: type and send reply to this chirp
+                            // TODO: add this chirp to favorites
                           },
                         ),
                       ],
