@@ -1,24 +1,24 @@
 import {Col, Container, Row} from "react-bootstrap";
 import Menu from "../../components/menu";
-import Trending from "../../components/trending";
+import TrendingSection from "../../components/trendingsection";
 import ChatList from "../../components/chatlist";
 
 const Messages = () => {
 	document.title = "Messages - Chirper";
 
 	return (
-		<Container>
+		<Container fluid="sm">
 			<Row>
-				<Col className="menu">
-					<Menu activeKey="/messages" />
+				<Col sm={false} md={2}>
+					<Menu />
 				</Col>
 
-				<Col>
-					<ChatList />
+				<Col sm={12} md={8}>
+					<ChatList/>
 				</Col>
 
-				<Col>
-					<Trending />
+				<Col sm={false} md={2} className="mt-2 d-none d-sm-block">
+					<TrendingSection/>
 				</Col>
 			</Row>
 		</Container>

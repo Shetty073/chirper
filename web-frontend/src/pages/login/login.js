@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 
 const Login = () => {
 	return (
-		<Container className="align-items-center" style={containerStyle}>
+		<Container fluid="sm" className="align-items-center" style={containerStyle}>
 			<h1 className="text-primary">Chirper</h1>
 			<h3 className="text-muted">Log In</h3>
 
@@ -12,7 +12,7 @@ const Login = () => {
 				<Form>
 					<Form.Group className="mb-3" controlId="email">
 						<Form.Label>Email address</Form.Label>
-						<Form.Control type="email" placeholder="Enter email" required />
+						<Form.Control type="email" placeholder="Enter email" required/>
 						<Form.Text className="text-muted">
 							We'll never share your email with anyone else.
 						</Form.Text>
@@ -20,7 +20,7 @@ const Login = () => {
 
 					<Form.Group className="mb-3" controlId="password">
 						<Form.Label>Password</Form.Label>
-						<Form.Control type="password" placeholder="Password" required />
+						<Form.Control type="password" placeholder="Password" required/>
 					</Form.Group>
 
 					<Button variant="primary" type="submit">

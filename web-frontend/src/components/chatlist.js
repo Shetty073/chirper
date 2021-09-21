@@ -1,4 +1,3 @@
-
 const ChatList = () => {
 	return (
 		<div className="mt-3 w-100">

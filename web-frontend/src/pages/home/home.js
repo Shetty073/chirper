@@ -1,6 +1,6 @@
-import {Container, Row, Col} from "react-bootstrap";
+import {Col, Container, Row} from "react-bootstrap";
 import Menu from "../../components/menu";
-import Trending from "../../components/trending";
+import TrendingSection from "../../components/trendingsection";
 import ChirpEditor from "../../components/chirpeditor";
 import Feed from "../../components/feed";
 
@@ -8,19 +8,19 @@ const Home = () => {
 	document.title = "Home - Chirper";
 
 	return (
-		<Container>
+		<Container fluid="sm">
 			<Row>
-				<Col className="menu">
-					<Menu activeKey="/" />
+				<Col sm={false} md={2}>
+					<Menu />
 				</Col>
 
-				<Col>
-					<ChirpEditor />
-					<Feed />
+				<Col sm={12} md={8}>
+					<ChirpEditor/>
+					<Feed/>
 				</Col>
 
-				<Col>
-					<Trending />
+				<Col sm={false} md={2} className="mt-2 d-none d-sm-block">
+					<TrendingSection />
 				</Col>
 			</Row>
 		</Container>

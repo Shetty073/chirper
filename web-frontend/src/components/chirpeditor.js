@@ -6,8 +6,7 @@ const ChirpEditor = () => {
 			<Col>
 				<Form>
 					<Form.Group className="mb-3" controlId="chirp">
-						<Form.Label className="fw-bold">Post New Chirp</Form.Label>
-						<Form.Control as="textarea" placeholder="Chirp" required />
+						<Form.Control as="textarea" placeholder="What's on your mind?" required/>
 					</Form.Group>
 					<Button variant="primary" type="submit">
 						Chirp
