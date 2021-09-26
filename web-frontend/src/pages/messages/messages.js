@@ -1,7 +1,7 @@
 import {Col, Container, Row} from "react-bootstrap";
-import Menu from "../../components/menu";
-import TrendingSection from "../../components/trendingsection";
-import ChatList from "../../components/chatlist";
+import Menu from "../../components/menu.component";
+import TrendingsectionComponent from "../../components/trendingsection.component";
+import ChatlistComponent from "../../components/chatlist.component";
 
 const Messages = () => {
 	document.title = "Messages - Chirper";
@@ -14,11 +14,11 @@ const Messages = () => {
 				</Col>
 
 				<Col sm={12} md={8}>
-					<ChatList/>
+					<ChatlistComponent/>
 				</Col>
 
 				<Col sm={false} md={2} className="mt-2 d-none d-sm-block">
-					<TrendingSection/>
+					<TrendingsectionComponent/>
 				</Col>
 			</Row>
 		</Container>

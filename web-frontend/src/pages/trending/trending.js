@@ -1,6 +1,6 @@
 import {Col, Container, Row} from "react-bootstrap";
-import Menu from "../../components/menu";
-import TrendingSection from "../../components/trendingsection";
+import Menu from "../../components/menu.component";
+import TrendingsectionComponent from "../../components/trendingsection.component";
 
 const Trending = () => {
 	document.title = "Home - Trending";
@@ -13,7 +13,7 @@ const Trending = () => {
 				</Col>
 
 				<Col sm={12} md={10}>
-					<TrendingSection />
+					<TrendingsectionComponent />
 				</Col>
 			</Row>
 		</Container>

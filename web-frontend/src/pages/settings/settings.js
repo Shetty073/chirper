@@ -1,7 +1,7 @@
 import {Col, Container, Row} from "react-bootstrap";
-import Menu from "../../components/menu";
-import TrendingSection from "../../components/trendingsection";
-import SettingsMenu from "../../components/settingsmenu";
+import Menu from "../../components/menu.component";
+import TrendingsectionComponent from "../../components/trendingsection.component";
+import SettingsmenuComponent from "../../components/settingsmenu.component";
 
 const Settings = () => {
 	document.title = "Settings - Chirper";
@@ -14,11 +14,11 @@ const Settings = () => {
 				</Col>
 
 				<Col sm={12} md={8}>
-					<SettingsMenu/>
+					<SettingsmenuComponent/>
 				</Col>
 
 				<Col sm={false} md={2} className="mt-2 d-none d-sm-block">
-					<TrendingSection/>
+					<TrendingsectionComponent/>
 				</Col>
 			</Row>
 		</Container>

@@ -1,4 +1,4 @@
-const ChatList = () => {
+const ChatlistComponent = () => {
 	return (
 		<div className="mt-3 w-100">
 			ChatList
@@ -6,4 +6,4 @@ const ChatList = () => {
 	);
 }
 
-export default ChatList;
+export default ChatlistComponent;

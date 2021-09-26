@@ -1,4 +1,4 @@
-const Feed = () => {
+const FeedComponent = () => {
 	return (
 		<div className="mt-2 w-100">
 			Feed
@@ -6,4 +6,4 @@ const Feed = () => {
 	);
 }
 
-export default Feed;
+export default FeedComponent;

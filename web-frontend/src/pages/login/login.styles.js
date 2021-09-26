@@ -4,7 +4,7 @@ const cardStyle = {
 };
 
 const containerStyle = {
-	marginTop: 100,
+	marginTop: '5vh',
 };
 
 export {cardStyle, containerStyle};

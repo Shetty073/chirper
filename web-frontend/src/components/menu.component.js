@@ -1,7 +1,7 @@
 import {Col, Nav, Navbar, Row} from "react-bootstrap";
 import {Link, withRouter} from "react-router-dom";
 
-const Menu = () => {
+const MenuComponent = () => {
 	return (
 		<Navbar expand="sm" className="flex-column align-items-start">
 				<Row>
@@ -33,4 +33,4 @@ const Menu = () => {
 	);
 }
 
-export default withRouter(Menu);
+export default withRouter(MenuComponent);

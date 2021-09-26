@@ -1,6 +1,6 @@
 import {Button, Col, Form} from "react-bootstrap";
 
-const ChirpEditor = () => {
+const ChirpeditorComponent = () => {
 	return (
 		<div className="my-3 w-100">
 			<Col>
@@ -17,4 +17,4 @@ const ChirpEditor = () => {
 	);
 }
 
-export default ChirpEditor;
+export default ChirpeditorComponent;
