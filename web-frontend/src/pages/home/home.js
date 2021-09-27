@@ -19,7 +19,7 @@ const Home = () => {
 					<FeedComponent/>
 				</Col>
 
-				<Col sm={false} md={2} className="mt-2 d-none d-sm-block">
+				<Col sm={false} md={2} className="mt-2 d-none d-md-block">
 					<TrendingsectionComponent />
 				</Col>
 			</Row>

@@ -93,7 +93,7 @@ export const AuthProvider = ({children}) => {
 	}
 
 	useEffect(() => {
-		loadData();
+		return loadData();
 	}, []);
 
 	const value = {
