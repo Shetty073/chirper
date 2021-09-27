@@ -1,7 +1,7 @@
 import {Col, Container, Row} from "react-bootstrap";
 import Menu from "../../components/menu.component";
 import TrendingsectionComponent from "../../components/trendingsection.component";
-import ChirpeditorComponent from "../../components/chirpeditor.component";
+import ChirpEditorComponent from "../../components/chirpeditor.component";
 import FeedComponent from "../../components/feed.component";
 
 const Home = () => {
@@ -15,7 +15,7 @@ const Home = () => {
 				</Col>
 
 				<Col sm={12} md={8}>
-					<ChirpeditorComponent/>
+					<ChirpEditorComponent/>
 					<FeedComponent/>
 				</Col>
 
