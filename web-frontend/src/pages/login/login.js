@@ -1,24 +1,34 @@
 import {Alert, Button, Card, Container, Form} from "react-bootstrap";
 import {cardStyle, containerStyle} from "../register/register.styles";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {isPasswordValid} from "../../utils";
+import {useAuth} from "../../contexts/authcontext";
 
 const Login = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
 
-	useEffect(() => {
-		setError(false);
-		setErrorMessage('');
-	}, []);
+	const {login} = useAuth();
+	const history = useHistory();
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		// log the user in
-		console.log({email, password});
+
+		setLoading(true);
+		let [status, errorMessage] = await login(email, password);
+
+		if(!status) {
+			setError(true);
+			setErrorMessage(errorMessage);
+		} else {
+			history.replace('/');
+		}
+
+		setLoading(false);
 	}
 
 	return (

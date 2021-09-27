@@ -1,8 +1,9 @@
 import {Alert, Button, Card, Container, Form} from "react-bootstrap";
 import {cardStyle, containerStyle} from "./register.styles";
-import {Link} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {Link, useHistory} from "react-router-dom";
+import {useState} from "react";
 import {isPasswordValid} from "../../utils";
+import {useAuth} from "../../contexts/authcontext";
 
 const Register = () => {
 	const [name, setName] = useState('');
@@ -10,30 +11,39 @@ const Register = () => {
 	const [dob, setDob] = useState('');
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
+	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
 
-	useEffect(() => {
-		setError(false);
-		setErrorMessage('');
-	}, []);
+	const {register} = useAuth();
+	const history = useHistory();
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
+
+		setLoading(true);
 		if (password === confirmPassword) {
 			if(isPasswordValid(password)) {
-				// submit the data
-				console.log({name, email, dob, password});
+				let [status, errorMessage] = await register(name, email, dob, password);
+
+				if(!status) {
+					setError(true);
+					setErrorMessage(errorMessage);
+				} else {
+					history.replace('/');
+				}
+
 			} else {
-				// display error message
 				setError(true);
 				setErrorMessage('Password must be between 8 to 16 characters long and must be alphanumeric');
 			}
+
 		} else {
-			// display error message
 			setError(true);
 			setErrorMessage('Passwords do not match');
 		}
+
+		setLoading(false);
 	}
 
 	return (
@@ -75,7 +85,7 @@ const Register = () => {
 						{errorMessage}
 					</Alert>
 
-					<Button variant="primary" type="submit">
+					<Button variant="primary" type="submit" disabled={loading} >
 						Register
 					</Button>
 

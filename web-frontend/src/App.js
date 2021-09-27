@@ -6,22 +6,27 @@ import Register from "./pages/register/register";
 import Messages from "./pages/messages/messages";
 import Settings from "./pages/settings/settings";
 import Trending from "./pages/trending/trending";
+import UnknownRoute from "./pages/unknown/unknown";
+import ProtectedRoute from "./components/protectedroute.component";
+import UnAuthenticatedRoute from "./components/unauthenticatedroute.component";
 
 function App() {
 	return (
 		<Router>
 			<Switch>
-				<Route exact path="/" component={withRouter(Home)}/>
+				<ProtectedRoute exact path="/" component={withRouter(Home)}/>
 
-				<Route path="/login" component={withRouter(Login)}/>
+				<UnAuthenticatedRoute path="/login" component={withRouter(Login)}/>
 
-				<Route path="/register" component={withRouter(Register)}/>
+				<UnAuthenticatedRoute path="/register" component={withRouter(Register)}/>
 
-				<Route path="/trending" component={withRouter(Trending)}/>
+				<ProtectedRoute path="/trending" component={withRouter(Trending)}/>
 
-				<Route path="/messages" component={withRouter(Messages)}/>
+				<ProtectedRoute path="/messages" component={withRouter(Messages)}/>
 
-				<Route path="/settings" component={withRouter(Settings)}/>
+				<ProtectedRoute path="/settings" component={withRouter(Settings)}/>
+
+				<Route path="*" component={withRouter(UnknownRoute)} />
 
 			</Switch>
 		</Router>

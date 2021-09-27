@@ -22,7 +22,7 @@ console.log('Connected to database.'))
 // Middlewares
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(cors())
+app.use(cors({exposedHeaders: 'Authorization'}))
 app.use(express.static('uploads'))
 
 // route middlewares

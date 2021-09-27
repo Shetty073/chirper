@@ -9,6 +9,17 @@ const isPasswordValid = (password) => {
 	}
 }
 
+let baseURI = 'http://localhost:3001';
+let authURI = `${baseURI}/api/auth`;
+let userURI = `${baseURI}/api/user`;
+let chripURI = `${baseURI}/api/chirp`;
+
+const backendURIs = {
+	register: `${authURI}/register`,
+	login: `${authURI}/login`,
+};
+
 export {
-	isPasswordValid
+	isPasswordValid,
+	backendURIs,
 }
