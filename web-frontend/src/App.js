@@ -26,7 +26,7 @@ function App() {
 
 				<ProtectedRoute path="/settings" component={withRouter(Settings)}/>
 
-				<Route path="*" component={withRouter(UnknownRoute)} />
+				<Route path="*" component={withRouter(UnknownRoute)}/>
 
 			</Switch>
 		</Router>

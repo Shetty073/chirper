@@ -11,7 +11,7 @@ const Home = () => {
 		<Container fluid="sm">
 			<Row>
 				<Col sm={false} md={2}>
-					<Menu />
+					<Menu/>
 				</Col>
 
 				<Col sm={12} md={8}>
@@ -20,7 +20,7 @@ const Home = () => {
 				</Col>
 
 				<Col sm={false} md={2} className="mt-2 d-none d-md-block">
-					<TrendingsectionComponent />
+					<TrendingsectionComponent/>
 				</Col>
 			</Row>
 		</Container>

@@ -9,11 +9,11 @@ const Trending = () => {
 		<Container fluid="sm">
 			<Row>
 				<Col sm={false} md={2}>
-					<Menu />
+					<Menu/>
 				</Col>
 
 				<Col sm={12} md={10}>
-					<TrendingsectionComponent />
+					<TrendingsectionComponent/>
 				</Col>
 			</Row>
 		</Container>

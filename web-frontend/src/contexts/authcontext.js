@@ -9,8 +9,6 @@ export const useAuth = () => {
 }
 
 export const AuthProvider = ({children}) => {
-	const axios = require('axios').default;
-
 	const [currentUser, setCurrentUser] = useState();
 	const [authToken, setAuthToken] = useState();
 	const [loading, setLoading] = useState(true);
@@ -27,7 +25,7 @@ export const AuthProvider = ({children}) => {
 				password
 			}
 		).then((response) => {
-			if(response.status === 200) {
+			if (response.status === 200) {
 				setCurrentUser(response.data.user);
 				setAuthToken(response.headers.authorization);
 
@@ -39,7 +37,7 @@ export const AuthProvider = ({children}) => {
 				return [false, response.data.message];
 			}
 		}).catch((error) => {
-			if( error.response ){
+			if (error.response) {
 				return [false, error.response.data.message];
 			} else {
 				return [false, 'Could not connect to the server. Please try again later.'];
@@ -56,7 +54,7 @@ export const AuthProvider = ({children}) => {
 				password
 			}
 		).then((response) => {
-			if(response.status === 200) {
+			if (response.status === 200) {
 				setCurrentUser(response.data.user);
 				setAuthToken(response.headers.authorization);
 
@@ -68,7 +66,7 @@ export const AuthProvider = ({children}) => {
 				return [false, response.data.message];
 			}
 		}).catch((error) => {
-			if( error.response ){
+			if (error.response) {
 				return [false, error.response.data.message];
 			} else {
 				return [false, 'Could not connect to the server. Please try again later.'];

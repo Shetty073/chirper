@@ -10,7 +10,7 @@ const Messages = () => {
 		<Container fluid="sm">
 			<Row>
 				<Col sm={false} md={2}>
-					<Menu />
+					<Menu/>
 				</Col>
 
 				<Col sm={12} md={8}>

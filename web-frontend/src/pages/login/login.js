@@ -1,8 +1,7 @@
 import {Alert, Button, Card, Container, Form} from "react-bootstrap";
 import {cardStyle, containerStyle} from "../register/register.styles";
 import {Link, useHistory} from "react-router-dom";
-import {useEffect, useState} from "react";
-import {isPasswordValid} from "../../utils";
+import {useState} from "react";
 import {useAuth} from "../../contexts/authcontext";
 
 const Login = () => {
@@ -21,7 +20,7 @@ const Login = () => {
 		setLoading(true);
 		let [status, errorMessage] = await login(email, password);
 
-		if(!status) {
+		if (!status) {
 			setError(true);
 			setErrorMessage(errorMessage);
 		} else {
@@ -40,7 +39,7 @@ const Login = () => {
 				<Form onSubmit={handleSubmit}>
 					<Form.Group className="mb-3" controlId="email">
 						<Form.Label>Email address</Form.Label>
-						<Form.Control type="email" placeholder="Enter email" onChange={e => setEmail(e.target.value)} required />
+						<Form.Control type="email" placeholder="Enter email" onChange={e => setEmail(e.target.value)} required/>
 						<Form.Text className="text-muted">
 							We'll never share your email with anyone else.
 						</Form.Text>
@@ -48,7 +47,7 @@ const Login = () => {
 
 					<Form.Group className="mb-3" controlId="password">
 						<Form.Label>Password</Form.Label>
-						<Form.Control type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} required />
+						<Form.Control type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} required/>
 					</Form.Group>
 
 					<Alert variant='danger' hidden={!error}>

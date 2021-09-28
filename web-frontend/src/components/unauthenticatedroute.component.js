@@ -7,7 +7,9 @@ const UnAuthenticatedRoute = ({component: Component, ...rest}) => {
 	return (
 		<Route
 			{...rest}
-			render={props => {return !currentUser ? <Component {...props} /> : <Redirect to="/" />}}
+			render={props => {
+				return !currentUser ? <Component {...props} /> : <Redirect to="/"/>
+			}}
 		/>
 	);
 }
