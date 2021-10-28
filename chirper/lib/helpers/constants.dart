@@ -1,5 +1,5 @@
 class Constants {
-  static const BASE_URI = 'http://192.168.1.100:3000';
+  static const BASE_URI = 'http://192.168.1.100:3001';
 
   // auth
   static const REGISTER_URI = '$BASE_URI/api/auth/register';
