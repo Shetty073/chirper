@@ -1,49 +1,83 @@
 import React, {useState} from 'react';
 import { MentionsInput, Mention } from 'react-mentions';
 import {Button, Col} from "react-bootstrap";
+import {backendURIs} from "../utils";
+import {default as axios} from "axios";
 
 const ChirpEditorComponent = () => {
 	const [chirp, setChirp] = useState('');
-	const [chirpPlainText, setChirpPlainText] = useState('');
-	const [mentionActive, setMentionActive] = useState(false);
 	const [loading, setLoading] = useState(false);
 
 
 	const submit = () => {
 		setLoading(true);
 
-		// TODO: Submit data code goes here
+		axios.post(
+			backendURIs.createChirp,
+			{
+				chirp,
+			},
+			{
+				headers: {
+					authorization: localStorage.getItem('authorization'),
+				},
+			}
+		).then((response) => {
+			if (response.status === 200) {
+				window.location.reload();
+			} else {
+				window.alert(response.data.message);
+			}
+		}).catch((error) => {
+			if (error.response) {
+				window.alert(error.response.data.message);
+			} else {
+				window.alert('Could not connect to the server. Please try again later.');
+			}
+		});
 
 		setLoading(false);
 	}
 
-	const handleChange = (event, newValue, newPlainTextValue, mentions) => {
+	const handleChange = (event, newValue, mentions) => {
 		setChirp(newValue);
-		setChirpPlainText(newPlainTextValue);
 	}
 
 	const fetchUsernameSuggestions = (query, callback) => {
-		// TODO: Replace this demo code with actual backend API call for username list
 		if (!query) return
-		fetch(`https://api.github.com/search/users?q=${query}`, { json: true })
-			.then(res => res.json())
-			// Transform the users to what react-mentions expects
-			.then(res =>
-				res.items.map(user => ({ display: user.login, id: user.login }))
-			)
-			.then(callback);
+		fetch(backendURIs.findUser, {
+			method: 'post',
+			body: JSON.stringify({
+				username: query,
+			}),
+			headers: {
+				'Content-Type': 'application/json',
+				authorization: localStorage.getItem('authorization'),
+			}
+		})
+		.then(res => res.json())
+		.then(res => res.users.map(user => ({ display: `@${user.username}`, id: user.username })))
+		.then(callback);
+
 	}
 
 	const fetchHashTagSuggestions = (query, callback) => {
-		// TODO: Replace this demo code with actual backend API call for trending hashtags list
 		if (!query) return
-		fetch(`https://api.github.com/search/users?q=${query}`, { json: true })
-			.then(res => res.json())
-			// Transform the users to what react-mentions expects
-			.then(res =>
-				res.items.map(user => ({ display: user.login, id: user.login }))
-			)
-			.then(callback);
+		fetch(backendURIs.findHashTag, {
+			method: 'post',
+			body: JSON.stringify({
+				tag: query,
+			}),
+			headers: {
+				'Content-Type': 'application/json',
+				authorization: localStorage.getItem('authorization'),
+			}
+		})
+		.then(res => res.json())
+		.then(res => {
+			return res.hashtags.length > 0 ? res.hashtags.map(hashtag => ({ display: `#${hashtag.tag}`, id: hashtag.tag })) : [{display: `#${query}`, id: query}];
+		})
+		.then(callback);
 	}
 
 	const renderUsernameSuggestion = (suggestion, search, highlightedDisplay) => (

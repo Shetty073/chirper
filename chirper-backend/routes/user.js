@@ -4,24 +4,13 @@ const { verifyAuthToken } = require('../verifytoken')
 
 
 // This endpoint returns the User object for the requested username
-router.post('/', verifyAuthToken, (req, res) => {
-    User.findOne({
-            username: req.body.username,
-        },
-        (err, user) => {
-            if (err) {
-                return res.status(400).json({
-                    success: false,
-                    message: 'User not found!',
-                })
-            }
+router.post('/', verifyAuthToken, async (req, res) => {
+    const users = await User.find({username: { $regex: '.*' + req.body.username + '.*' }})
 
-            return res.status(200).json({
-                success: true,
-                user: user,
-            })
-        }
-    )
+    return res.status(200).json({
+        success: true,
+        users: users,
+    })
 })
 
 // multer config for handling multipart form data

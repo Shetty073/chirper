@@ -16,6 +16,10 @@ let chripURI = `${baseURI}/api/chirp`;
 const backendURIs = {
 	register: `${authURI}/register`,
 	login: `${authURI}/login`,
+	createChirp: `${chripURI}/create`,
+	findUser: `${userURI}`,
+	findHashTag: `${chripURI}/tag`,
+	getTrendingTags: `${chripURI}/trending`,
 };
 
 export {
